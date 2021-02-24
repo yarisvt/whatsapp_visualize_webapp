@@ -7,7 +7,7 @@ from api import api
 app = Flask(__name__)
 app.register_blueprint(api)
 
-if environ['FLASK_ENV'] is not None and environ['FLASK_ENV'] == 'development':
+if environ.get('FLASK_ENV') is not None and environ['FLASK_ENV'] == 'development':
     print('Enabling CORS')
     CORS(app)    
 
