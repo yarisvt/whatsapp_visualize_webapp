@@ -10,7 +10,7 @@ function Total() {
     const [error, setError] = React.useState('');
 
     useEffect(() => {
-        fetch('/api/total-messages-per-person')
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/total-messages-per-person`)
             .then((response) => response.json())
             .then((data) => {
                 setChart(data);

@@ -18,7 +18,7 @@ function Search() {
             setError('');
             setLastWord(word);
 
-            fetch(`/api/get-by-word?words=${word}`)
+            fetch(`${process.env.REACT_APP_API_BASE_URL}/api/get-by-word?words=${word}`)
             .then((response) => response.json())
             .then((data) => {
                 setChart(data);

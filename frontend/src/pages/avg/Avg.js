@@ -10,7 +10,7 @@ function Avg() {
     const [error, setError] = React.useState('');
 
     useEffect(() => {
-        fetch('/api/average-characters-per-message')
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/average-characters-per-message`)
             .then((response) => response.json())
             .then((data) => {
                 setChart(data);

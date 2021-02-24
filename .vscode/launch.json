@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Backend",
+            "type": "python",
+            "request": "launch",
+            "program": "app.py",
+            "env": {
+                "FLASK_ENV": "development"
+            },
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}\\api"
+        },
+        {
+            "name": "Frontend",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm start",
+            "cwd": "${workspaceFolder}\\frontend"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Backend/Frontend",
+            "configurations": [
+                "Backend",
+                "Frontend"
+            ]
+        }
+    ]
+}
