@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import re
 
 import pandas as pd
 from flask import Blueprint, jsonify, request
@@ -9,6 +10,7 @@ api = Blueprint('api', __name__)
 
 def get_data_from_database():
     df = pd.read_csv("database.tsv", sep="\t")
+    df["message"] = df["full_message"].apply(lambda x: re.sub(r"[,.\"'?!]", "", x).lower().split())
     df.date = pd.to_datetime(df.date, format="%Y-%m-%d %H:%M:%S")
     return df
 
