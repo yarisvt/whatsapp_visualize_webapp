@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:14.16.0-alpine
 
 WORKDIR '/app'
 
@@ -7,9 +7,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 
+RUN npm install npm serve -g --silent
 RUN npm install --silent
-RUN npm install react-scripts@4.0.3 -g --silent
-RUN npm install -g serve --silent
 
 COPY . ./
 
