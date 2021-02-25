@@ -8,7 +8,7 @@ api = Blueprint('api', __name__)
 
 
 def get_data_from_database():
-    df = pd.read_csv("api/database.tsv", sep="\t")
+    df = pd.read_csv("database.tsv", sep="\t")
     df.date = pd.to_datetime(df.date, format="%Y-%m-%d %H:%M:%S")
     return df
 

@@ -1,6 +1,5 @@
-node_modules/
 virtualenv/
 .idea/
-.vscode/
 __pycache__/
 *.tsv
+.env

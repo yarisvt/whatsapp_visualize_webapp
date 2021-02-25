@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  api:
+    build: ./api
+    restart: unless-stopped
+    ports:
+      - "50070:5000"
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "50071:3000"

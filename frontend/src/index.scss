@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+* {
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Roboto', sans-serif;
+}
+
+#root, html, body {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+}
