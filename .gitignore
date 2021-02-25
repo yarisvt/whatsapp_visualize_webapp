@@ -1,5 +1,13 @@
-virtualenv/
-.idea/
+# python
+api/env
+api/virtualenv
 __pycache__/
+
+# pycharm
+.idea/
+
+# database
 *.tsv
+
+# env file
 .env
