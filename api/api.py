@@ -1,18 +1,13 @@
 from datetime import datetime
 import json
-import re
 
 import pandas as pd
 from flask import Blueprint, jsonify, request
 
+from utils import get_data_per_month, get_data_from_database
+
 api = Blueprint('api', __name__)
 
-
-def get_data_from_database():
-    df = pd.read_csv("database.tsv", sep="\t")
-    df["message"] = df["full_message"].apply(lambda x: re.sub(r"[,.\"'?!]", "", x).lower().split())
-    df.date = pd.to_datetime(df.date, format="%Y-%m-%d %H:%M:%S")
-    return df
 
 @api.route("/api/total-messages-per-person", methods=["GET"])
 def total_messages_per_person():
@@ -42,5 +37,5 @@ def find_by_word():
     data = df["message"].apply(lambda x: any(
         item for item in words if item in x))
 
-    json_data = json.loads(df[data].groupby(["name"]).size().to_json())
-    return jsonify({"word": ", ".join(words), "data": json_data}), 200
+    json_data = get_data_per_month(df[data])
+    return jsonify({"words": ", ".join(words), "data": json_data}), 200
