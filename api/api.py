@@ -1,32 +1,28 @@
 from datetime import datetime
 import json
-import re
 
 import pandas as pd
 from flask import Blueprint, jsonify, request
 
+from utils import get_data_per_month, get_data_from_database
+
 api = Blueprint('api', __name__)
 
-
-def get_data_from_database():
-    df = pd.read_csv("database.tsv", sep="\t")
-    df["message"] = df["full_message"].apply(lambda x: re.sub(r"[,.\"'?!]", "", x).lower().split())
-    df.date = pd.to_datetime(df.date, format="%Y-%m-%d %H:%M:%S")
-    return df
 
 @api.route("/api/total-messages-per-person", methods=["GET"])
 def total_messages_per_person():
     df = get_data_from_database()
-    json_data =  json.loads(df.groupby(["name"]).size().to_json())
+    data = df.groupby(["name", pd.Grouper(key='date', freq='M')]).size()
+    json_data = get_data_per_month(data)
 
     return jsonify({"data": json_data})
 
 @api.route("/api/average-characters-per-message", methods=["GET"])
 def average_characters_per_message():
     df = get_data_from_database()
-    json_data = json.loads(df.groupby(["name"])["full_message"].apply(
-        lambda x: sum([len(i) for i in x]) / len(x)).to_json())
-
+    df["total_chars"] = df["full_message"].apply(lambda x : len(x))
+    data = df.groupby(["name", pd.Grouper(key='date', freq='M')])["total_chars"].mean()
+    json_data = get_data_per_month(data)
     return jsonify({"data": json_data})
 
 @api.route("/api/get-by-word", methods=["GET"])
@@ -41,6 +37,7 @@ def find_by_word():
 
     data = df["message"].apply(lambda x: any(
         item for item in words if item in x))
-
-    json_data = json.loads(df[data].groupby(["name"]).size().to_json())
-    return jsonify({"word": ", ".join(words), "data": json_data}), 200
+    
+    data = df[data].groupby(["name", pd.Grouper(key='date', freq='M')]).size()
+    json_data = get_data_per_month(data)
+    return jsonify({"words": ", ".join(words), "data": json_data}), 200
