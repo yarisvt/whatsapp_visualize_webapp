@@ -10,8 +10,6 @@ function HeatMap(props) {
   const { data } = props.data;
   const names = Object.keys(data);
 
-  console.log(data);
-
   const [name, setName] = useState(names[0]);
   const [series, setSeries] = useState([]);
 
