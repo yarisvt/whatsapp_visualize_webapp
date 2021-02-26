@@ -13,7 +13,6 @@ function HBarChart(props) {
     }
     chartData[entry] = totalSum;
   }
-  console.log(chartData);
 
   const series = [{ name: words, data: Object.values(chartData) }];
 

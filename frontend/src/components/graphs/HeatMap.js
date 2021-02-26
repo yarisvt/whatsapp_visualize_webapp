@@ -1,20 +1,30 @@
+import { useState, useEffect } from "react";
+
+import { InputGroup } from "react-bootstrap";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+
 import ReactApexChart from "react-apexcharts";
 
 function HeatMap(props) {
-  const { words, data } = props.data;
+  const { data } = props.data;
+  const names = Object.keys(data);
 
-  // dropdown menu to select the person
+  console.log(data);
 
-  // useEffect when name changes to rerun the graph
+  const [name, setName] = useState(names[0]);
+  const [series, setSeries] = useState([]);
 
-  const series = [];
-  for (const monthData in data["Yaris Van Thiel"]) {
-    series.push({
-      name: monthData,
-      data: Object.values(data["Yaris Van Thiel"][monthData]),
-    });
-  }
-  console.log(series);
+  useEffect(() => {
+    setSeries([]);
+    for (const monthData in data[name]) {
+      const serie = {
+        name: monthData,
+        data: Object.values(data[name][monthData]),
+      };
+      setSeries((prev) => [...prev, serie]);
+    }
+  }, [name]);
 
   const options = {
     chart: {
@@ -49,14 +59,33 @@ function HeatMap(props) {
   };
 
   return (
-    <div id="chart">
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="heatmap"
-        height={350}
-        width={600}
-      />
+    <div className="mb-3">
+      <InputGroup className="mb-3 mt-3">
+        <DropdownButton
+          as={InputGroup.Prepend}
+          variant="outline-secondary"
+          title={name}
+          id="input-group-dropdown-1"
+          onSelect={(e) => setName(e)}
+        >
+          {names.map((name) => {
+            return (
+              <Dropdown.Item eventKey={name} key={name}>
+                {name}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
+      </InputGroup>
+      <div id="chart">
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="heatmap"
+          height={350}
+          width={600}
+        />
+      </div>
     </div>
   );
 }

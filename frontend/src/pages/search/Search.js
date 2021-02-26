@@ -12,6 +12,7 @@ function Search() {
   const [data, setData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [heatmap, setHeatmap] = React.useState(false);
 
   function handleClick(e) {
     if (!loading && word && word !== lastWord) {
@@ -47,6 +48,19 @@ function Search() {
             aria-describedby="inputGroup-sizing-sm"
             onChange={(e) => setWord(e.target.value)}
           />
+        </InputGroup>
+        <InputGroup size="sm" className="mb-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroup-sizing-sm">HeatMap</InputGroup.Text>
+          </InputGroup.Prepend>
+          <InputGroup.Append>
+            <InputGroup.Checkbox
+              onClick={(e) => setHeatmap((prev) => !prev)}
+              aria-label="Checkbox for following text input"
+            />
+          </InputGroup.Append>
+        </InputGroup>
+        <InputGroup>
           <InputGroup.Append>
             <Button variant="primary" onClick={handleClick}>
               Get results
@@ -71,14 +85,22 @@ function Search() {
         </div>
       )}
 
-      {!loading && !error && Object.keys(data).length > 0 && (
-        <HeatMap words={data.words} data={data} title={`Word: ${data.words}`} />
-        // <HBarChart
-        //   words={data.words}
-        //   data={data}
-        //   title={`Word: ${data.words}`}
-        // />
-      )}
+      {!loading &&
+        !error &&
+        Object.keys(data).length > 0 &&
+        (heatmap ? (
+          <HeatMap
+            words={data.words}
+            data={data}
+            title={`Word: ${data.words}`}
+          />
+        ) : (
+          <HBarChart
+            words={data.words}
+            data={data}
+            title={`Word: ${data.words}`}
+          />
+        ))}
     </div>
   );
 }
