@@ -36,6 +36,44 @@ function Search() {
     }
   }
 
+  let content = null;
+
+  if (loading) {
+    content = <PulseLoader color="gray" size="1rem" />;
+  } else if (error) {
+    content = (
+      <div className="error message-box">
+        <h3>Error</h3>
+        {error}
+      </div>
+    );
+  } else if (lastWord && data && Object.keys(data.data).length === 0) {
+    content = (
+      <div className="message-box">
+        <h3>Info</h3>
+        No data available
+      </div>
+    );
+  } else if (Object.keys(data).length > 0) {
+    if (heatmap) {
+      content = (
+        <HeatMap
+          words={data.words}
+          data={data}
+          title={`Word: ${data.words}`}
+        />
+      );
+    } else {
+      content = (
+        <HBarChart
+          words={data.words}
+          data={data}
+          title={`Word: ${data.words}`}
+        />
+      );
+    }
+  }
+
   return (
     <div>
       <div className="submission-form">
@@ -68,39 +106,7 @@ function Search() {
           </InputGroup.Append>
         </InputGroup>
       </div>
-
-      {loading && <PulseLoader color="gray" size="1rem" />}
-
-      {!loading && error && (
-        <div className="error message-box">
-          <h3>Error</h3>
-          {error}
-        </div>
-      )}
-
-      {!loading && !error && lastWord && Object.keys(data).length === 0 && (
-        <div className="message-box">
-          <h3>Info</h3>
-          No data available
-        </div>
-      )}
-
-      {!loading &&
-        !error &&
-        Object.keys(data).length > 0 &&
-        (heatmap ? (
-          <HeatMap
-            words={data.words}
-            data={data}
-            title={`Word: ${data.words}`}
-          />
-        ) : (
-          <HBarChart
-            words={data.words}
-            data={data}
-            title={`Word: ${data.words}`}
-          />
-        ))}
+      {content}
     </div>
   );
 }
