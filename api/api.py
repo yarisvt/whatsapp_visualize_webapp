@@ -19,10 +19,10 @@ def total_messages_per_person():
 
 @api.route("/api/average-characters-per-message", methods=["GET"])
 def average_characters_per_message():
-    # TODO fix this to work per month
     df = get_data_from_database()
-    json_data = json.loads(df.groupby(["name"])["full_message"].apply(
-        lambda x: sum([len(i) for i in x]) / len(x)).to_json())
+    df["total_chars"] = df["full_message"].apply(lambda x : len(x))
+    data = df.groupby(["name", pd.Grouper(key='date', freq='M')])["total_chars"].mean()
+    json_data = get_data_per_month(data)
     return jsonify({"data": json_data})
 
 @api.route("/api/get-by-word", methods=["GET"])
