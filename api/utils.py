@@ -10,9 +10,8 @@ def get_data_from_database():
     df.date = pd.to_datetime(df.date, format="%Y-%m-%d %H:%M:%S")
     return df
 
-def get_data_per_month(df):
-    json_data = {}           
-    data = df.groupby(["name", pd.Grouper(key='date', freq='M')]).size()
+def get_data_per_month(data):
+    json_data = {}
     for index, value in data.items():
         name = index[0]
         year = index[1].year

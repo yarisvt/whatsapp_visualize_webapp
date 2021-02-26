@@ -12,16 +12,17 @@ api = Blueprint('api', __name__)
 @api.route("/api/total-messages-per-person", methods=["GET"])
 def total_messages_per_person():
     df = get_data_from_database()
-    json_data =  json.loads(df.groupby(["name"]).size().to_json())
+    data = df.groupby(["name", pd.Grouper(key='date', freq='M')]).size()
+    json_data = get_data_per_month(data)
 
     return jsonify({"data": json_data})
 
 @api.route("/api/average-characters-per-message", methods=["GET"])
 def average_characters_per_message():
+    # TODO fix this to work per month
     df = get_data_from_database()
     json_data = json.loads(df.groupby(["name"])["full_message"].apply(
         lambda x: sum([len(i) for i in x]) / len(x)).to_json())
-
     return jsonify({"data": json_data})
 
 @api.route("/api/get-by-word", methods=["GET"])
@@ -36,6 +37,7 @@ def find_by_word():
 
     data = df["message"].apply(lambda x: any(
         item for item in words if item in x))
-
-    json_data = get_data_per_month(df[data])
+    
+    data = df[data].groupby(["name", pd.Grouper(key='date', freq='M')]).size()
+    json_data = get_data_per_month(data)
     return jsonify({"words": ", ".join(words), "data": json_data}), 200

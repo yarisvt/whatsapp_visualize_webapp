@@ -22,7 +22,7 @@ function HeatMap(props) {
       };
       setSeries((prev) => [...prev, serie]);
     }
-  }, [name]);
+  }, [name, data]);
 
   const options = {
     chart: {
