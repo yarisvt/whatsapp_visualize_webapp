@@ -1,0 +1,14 @@
+.col {
+    .input-group-prepend {
+        display: flex;
+        flex-grow: 1;
+
+        .input-group-text {
+            flex-grow: 1;
+        }
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
