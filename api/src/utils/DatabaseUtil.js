@@ -6,36 +6,47 @@ const { Word } = require('../models/Word');
 
 const MESSAGE_PATTERN = /^\[(?<time>\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2})\] (?<sender>.*?): (?<message>.*)$/;
 
-// TODO: Fix multi line messages
 async function populateDatabase(path) {
     const data = readFileSync(path, 'UTF-8');
     const lines = data.split(/\r?\n/);
 
+    let person;
+    let message;
+
     for (const line in lines) {
         const l = lines[line].trim();
-        const m = l.match(MESSAGE_PATTERN);
+        let m;
 
-        if (l.indexOf('⬅️') === -1 && m) {
-            try {
-                let person = await Person.findOne({ where: { name: m.groups.sender } });
+        if (l.indexOf('⬅️') !== -1 || l.indexOf('\u200e') !== -1) continue;
+
+        try {
+            let words;
+            if (m = l.match(MESSAGE_PATTERN)) {
+                person = await Person.findOne({ where: { name: m.groups.sender } });
                 if (!person) {
-                    person = await Person.create({ name: m.groups.sender })
+                    person = await Person.create({ name: m.groups.sender });
                 }
-                const message = await person.createMessage({ time: moment(m.groups.time, 'DD-MM-YYYY hh:mm:ss') });
-                const words = m.groups.message.split(' ');
-                
-                for (const word in words) {
-                    let w = await Word.findOne({ where: { word: words[word] } });
-                    if (!w) {
-                        w = await Word.create({ word: words[word] });
-                    }
-                    await message.addWord(w);
-                }
-            } catch (err) {
-                consola.error(err);
-                consola.info(`Time: ${m.groups.time} - Sender: ${m.groups.sender} - Message: ${m.groups.message}`);
-                throw new Error();
+                message = await person.createMessage({ time: moment(m.groups.time, 'DD-MM-YYYY hh:mm:ss') });
+                words = m.groups.message.split(/[\s,.]/);
+            } else {
+                words = l.split(/[\s,.]/);
             }
+
+            for (const word in words) {
+                const wo = words[word].trim();
+                // i.e. empty string
+                if (!Boolean(wo)) continue;
+
+                let w = await Word.findOne({ where: { word: wo } });
+                if (!w) {
+                    w = await Word.create({ word: wo });
+                }
+                await message.addWord(w);
+            }
+        } catch (err) {
+            consola.error(err);
+            consola.info(l);
+            throw new Error();
         }
     }
 }
