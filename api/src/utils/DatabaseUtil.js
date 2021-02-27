@@ -27,9 +27,9 @@ async function populateDatabase(path) {
                     person = await Person.create({ name: m.groups.sender });
                 }
                 message = await person.createMessage({ time: moment(m.groups.time, 'DD-MM-YYYY hh:mm:ss') });
-                words = m.groups.message.split(/[\s,]+/);
+                words = m.groups.message.toLowerCase().split(/[\s,.\"'?!]+/);
             } else {
-                words = l.split(/[\s,]+/);
+                words = l.toLowerCase().split(/[\s,.\"'?!]+/);
             }
 
             for (const word in words) {
