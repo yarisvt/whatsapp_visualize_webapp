@@ -2,7 +2,7 @@
 function sqlResultToHeatMapSeries(array) {
     const years = [... new Set(array.map(e => e.year))];
     const result = years.map(year => {
-        return { name: year, data: [] };
+        return { name: year, data: Array(12) };
     });
 
     result.forEach(y => {
