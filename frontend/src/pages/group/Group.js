@@ -4,15 +4,16 @@ import { Button, Col, Form, InputGroup } from "react-bootstrap";
 
 import { usePeopleStore } from '../../context/PeopleContext';
 import PageWrapper from "../../components/page/PageWrapper";
-import HeatMap from "../../components/graphs/HeatMap";
+import HBarChart from "../../components/graphs/HBarChart";
+import TimeSeriesLineChart from '../../components/graphs/TimeSeriesLineChart'
 
-import './personal.scss';
+import './group.scss';
 
 function Personal() {
   const [people] = usePeopleStore();
   const [loading, setLoading] = useState(false);
-  const [person, setPerson] = useState(0);
   const [result, setResult] = useState(null);
+  const [resultType, setResultType] = useState(null);
   const [error, setError] = useState(false);
   const [monthly, setMonthly] = useState(false);
   const [words, setWords] = useState('');
@@ -23,12 +24,14 @@ function Personal() {
     setResult(null);
     setError(false);
     setLastWords(words);
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/people/${person}/messages?monthly=${monthly}&words=${words}`)
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/messages?monthly=${monthly}&words=${words}`)
       .then(res => res.json())
       .then((response) => {
         setResult(response.result);
         if (!response.success) {
           setError(true);
+        } else {
+            setResultType(monthly ? 'line' : 'bar')
         }
         setLoading(false);
       }).catch((err) => {
@@ -53,19 +56,17 @@ function Personal() {
       <h3>Info</h3>
       No data available
     </div>;
-  } else if (result && typeof result === 'object') {
-    content = <HeatMap
+  } else if (resultType === 'line') {
+    content = <TimeSeriesLineChart
       title={lastWords ? `Words: ${lastWords}`: 'Messages' }
-      categories={[
-        'January', 'February', 'March', 'April', 'May', 'June', 'Juli', 'August', 'September', 'October', 'November', 'December'
-      ]}
       data={result}
     />;
-  } else if (typeof result === 'number') {
-    content = <div className='message-box'>
-      {lastWords && <h3>Words: {lastWords}</h3>}
-      Count: {result}
-    </div>;
+  } else if (resultType === 'bar') {
+    content = <HBarChart
+      title={lastWords ? `Words: ${lastWords}`: 'Messages' }
+      categories={people.map(p => p.name)}
+      data={result}
+    />
   }
 
   return (
@@ -83,14 +84,6 @@ function Personal() {
         </Form.Row>
         <Form.Row>
           <Col>
-            <Form.Control disabled={loading} onChange={(e) => setPerson(e.target.value)} defaultValue='0' as='select'>
-              <option value='0' disabled>Select a person...</option>
-              {
-                people.map(p => <option key={p.id} value={p.id}>{p.name}</option>)
-              }
-            </Form.Control>
-          </Col>
-          <Col>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>Monthly</InputGroup.Text>
@@ -101,7 +94,7 @@ function Personal() {
             </InputGroup>
           </Col>
           <Col>
-            <Button disabled={loading || !person} onClick={handleClick} variant="primary">
+            <Button disabled={loading} onClick={handleClick} variant="primary">
               Get results
             </Button>
           </Col>

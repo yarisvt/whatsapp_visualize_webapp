@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
+const { MessageWord } = require('./MessageWord');
 const { Word } = require('./Word');
 const { sequelize } = require('../database');
 
@@ -21,7 +22,7 @@ Message.init({
     sequelize
 });
 
-Message.belongsToMany(Word, { through: 'Message_Word', timestamps: false });
-Word.belongsToMany(Message, { through: 'Message_Word', timestamps: false });
+Message.belongsToMany(Word, { through: MessageWord });
+Word.belongsToMany(Message, { through: MessageWord });
 
 module.exports = { Message };

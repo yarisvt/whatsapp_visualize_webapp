@@ -14,7 +14,7 @@ sequelize.sync();
 const server = express();
 
 server.use(helmet());
-if (process.env.development) {
+if (process.env.NODE_ENV === 'development') {
     server.use(cors());
 }
 

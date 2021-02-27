@@ -26,14 +26,11 @@ function Header() {
             <NavBar.Toggle aria-controls="basic-navbar-nav" />
             <NavBar.Collapse>
                 <Nav>
+                    <Nav.Link as={Link} to="/group">
+                        Group
+                    </Nav.Link>
                     <Nav.Link as={Link} to="/personal">
                         Personal
-                    </Nav.Link>
-                    <Nav.Link as={Link} to="/average-characters-per-message">
-                        Average characters per message
-                    </Nav.Link>
-                    <Nav.Link as={Link} to="/get-by-word">
-                        Search by word
                     </Nav.Link>
                 </Nav>
             </NavBar.Collapse>
