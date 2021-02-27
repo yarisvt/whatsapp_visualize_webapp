@@ -1,13 +1,19 @@
-FROM python:3.9.2-slim
+FROM node:14.16.0-alpine
 
-WORKDIR "/app"
+WORKDIR '/app'
 
-COPY requirements.txt ./
+ENV PATH /app/node_modules/.bin:$PATH
 
-RUN pip3 install -r requirements.txt
+COPY package.json ./
+COPY package-lock.json ./
 
-COPY . .
+RUN npm install npm -g --silent
+RUN npm install --silent
 
-EXPOSE 5000
+COPY . ./
 
-CMD ["python", "./app.py"]
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["node", "src/index.js"]

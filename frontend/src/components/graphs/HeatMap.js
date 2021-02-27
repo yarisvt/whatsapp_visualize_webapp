@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
 
-import { InputGroup } from "react-bootstrap";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
-
 import ReactApexChart from "react-apexcharts";
 
 function HeatMap(props) {
@@ -57,33 +53,14 @@ function HeatMap(props) {
   };
 
   return (
-    <div className="mb-3">
-      <InputGroup className="mb-3 mt-3">
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-secondary"
-          title={name}
-          id="input-group-dropdown-1"
-          onSelect={(e) => setName(e)}
-        >
-          {names.map((name) => {
-            return (
-              <Dropdown.Item eventKey={name} key={name}>
-                {name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
-      </InputGroup>
-      <div id="chart">
-        <ReactApexChart
-          options={options}
-          series={series}
-          type="heatmap"
-          height={350}
-          width={600}
-        />
-      </div>
+    <div id="chart">
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="heatmap"
+        height={350}
+        width={600}
+      />
     </div>
   );
 }

@@ -4,10 +4,31 @@ services:
   api:
     build: ./api
     restart: unless-stopped
+    env_file:
+      - api/.env
+    depends_on:
+      - db
     ports:
       - "50070:5000"
   frontend:
     build: ./frontend
     restart: unless-stopped
+    depends_on:
+      - api
     ports:
       - "50071:3000"
+  db:
+    image: mariadb:10.5.9
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+    restart: unless-stopped
+    env_file:
+      - api/.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

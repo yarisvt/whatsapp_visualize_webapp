@@ -47,7 +47,7 @@ function Search() {
         {error}
       </div>
     );
-  } else if (lastWord && data && Object.keys(data.data).length === 0) {
+  } else if (lastWord && data && data.data && Object.keys(data.data).length === 0) {
     content = (
       <div className="message-box">
         <h3>Info</h3>
