@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Nav from "react-bootstrap/Nav";
 import NavBar from "react-bootstrap/Navbar";
@@ -7,18 +7,20 @@ import { usePeopleStore } from '../../context/PeopleContext';
 
 function Header() {
     const [people, setPeople] = usePeopleStore();
+    const [lastAttempt, setLastAttempt] = useState(-1);
 
     useEffect(() => {
-        if (!people.length) {
+        if (!people.length && (lastAttempt === -1 || Date.now() - lastAttempt >= 30000)) {
+            setLastAttempt(Date.now());
             fetch(`${process.env.REACT_APP_API_BASE_URL}/api/people`)
-            .then(res => res.json())
-            .then((response) => {
-                if (response.success) {
-                setPeople(response.result);
-                }
-            });
+                .then(res => res.json())
+                .then((response) => {
+                    if (response.success) {
+                    setPeople(response.result);
+                    }
+                }).catch(console.error);
         }
-    });
+    }, [lastAttempt, people.length, setPeople]);
 
     return (
         <NavBar bg="light" expand="lg">
