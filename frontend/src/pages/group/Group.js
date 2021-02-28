@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
-import { Button, Col, Form, InputGroup } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
 
 import { usePeopleStore } from "../../context/PeopleContext";
 import PageWrapper from "../../components/page/PageWrapper";
