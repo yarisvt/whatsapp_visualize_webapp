@@ -13,7 +13,7 @@ function Personal() {
   const [result, setResult] = useState(null);
   const [resultType, setResultType] = useState(null);
   const [error, setError] = useState(false);
-  const [monthly, setMonthly] = useState(false);
+  const [graph, setGraph] = useState("bar");
   const [words, setWords] = useState("");
   const [lastWords, setLastWords] = useState("");
 
@@ -23,7 +23,7 @@ function Personal() {
     setError(false);
     setLastWords(words);
     fetch(
-      `${process.env.REACT_APP_API_BASE_URL}/api/messages?monthly=${monthly}&words=${words}`
+      `${process.env.REACT_APP_API_BASE_URL}/api/messages/${graph}?words=${words}`
     )
       .then((res) => res.json())
       .then((response) => {
@@ -31,7 +31,7 @@ function Personal() {
         if (!response.success) {
           setError(true);
         } else {
-          setResultType(monthly ? "line" : "bar");
+          setResultType(graph);
         }
         setLoading(false);
       })
@@ -61,7 +61,7 @@ function Personal() {
         No data available
       </div>
     );
-  } else if (resultType === "line") {
+  } else if (resultType === "line" || resultType === "cumsum") {
     content = (
       <TimeSeriesLineChart
         title={lastWords ? `Words: ${lastWords}` : "Messages"}
@@ -98,16 +98,21 @@ function Personal() {
         </Form.Row>
         <Form.Row>
           <Col>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>Monthly</InputGroup.Text>
-              </InputGroup.Prepend>
-              <InputGroup.Append>
-                <InputGroup.Checkbox
-                  onChange={(e) => setMonthly(e.target.checked)}
-                />
-              </InputGroup.Append>
-            </InputGroup>
+            <Form.Control
+              disabled={loading}
+              onChange={(e) => setGraph(e.target.value)}
+              defaultValue="0"
+              as="select"
+            >
+              <option value="0" disabled>
+                Select a graph...
+              </option>
+              <option defaultValue value="bar">
+                Bar chart
+              </option>
+              <option value="line">Line chart</option>
+              <option value="cumsum">Cumulative line chart</option>
+            </Form.Control>
           </Col>
           <Col>
             <Button disabled={loading} onClick={handleClick} variant="primary">
