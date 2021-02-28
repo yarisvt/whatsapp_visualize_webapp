@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { readdirSync } = require('fs');
 const { join } = require('path');
+const { requestLogging } = require('./middlewares/logging');
 
 const { sequelize } = require('./database');
 require('./models/Word');
@@ -14,6 +15,8 @@ sequelize.sync();
 const server = express();
 
 server.use(helmet());
+server.use(requestLogging);
+
 if (process.env.NODE_ENV === 'development') {
     server.use(cors());
 }
