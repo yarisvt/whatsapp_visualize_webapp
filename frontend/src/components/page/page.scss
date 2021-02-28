@@ -5,3 +5,54 @@
     align-items: center;
     justify-content: center;
 }
+
+.content {
+    width: 60%;
+  }
+
+.col {
+    .input-group-prepend {
+        display: flex;
+        flex-grow: 1;
+
+        .input-group-text {
+            flex-grow: 1;
+        }
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+  
+  @media only screen and (max-width: 992px) {
+    .content {
+      width: 90%;
+    }
+
+    form {
+      overflow: hidden;
+    }
+    .message-box {
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+  
+    .form-control {
+      font-size: 0.8rem;
+    }
+  
+    .col {
+      .input-grpup {
+        width: 80%;
+      }
+      .input-group-text {
+        font-size: 0.8rem;
+      }
+  
+      .btn {
+        font-size: 0.8rem;
+      }
+    }
+  }
