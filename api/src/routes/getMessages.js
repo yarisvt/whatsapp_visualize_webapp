@@ -10,9 +10,8 @@ module.exports = {
     middlewares: [],
     readRequest: async (req, res) => {  
         if (req.query.monthly === 'true' && req.query.cumsum === 'true') {
-            if (req.query.words) {
                 if (req.query.words) {
-                    sequelize.query('SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count, SUM(count(p.id)) OVER (PARTITION BY name ORDER BY YEAR(time), MONTH(time)) AS cumsum ' +
+                    sequelize.query('SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, SUM(count(p.id)) OVER (PARTITION BY name ORDER BY YEAR(time), MONTH(time)) AS count ' +
                                     'FROM Messages as m, People as p, Words as w, MessageWords as mw ' +
                                     'WHERE p.id = m.PersonId AND m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) ' +
                                     'GROUP BY PersonId, YEAR(time), MONTH(time)', { 
@@ -26,7 +25,6 @@ module.exports = {
                         consola.error(err);
                         res.status(500).json(new Response(false, 'An error occured quering the data'));
                     });
-            }
             }
         }     
         else if (req.query.monthly === 'true') {
