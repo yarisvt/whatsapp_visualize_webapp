@@ -7,8 +7,6 @@ import PageWrapper from "../../components/page/PageWrapper";
 import HBarChart from "../../components/graphs/HBarChart";
 import TimeSeriesLineChart from "../../components/graphs/TimeSeriesLineChart";
 
-import "./group.scss";
-
 function Personal() {
   const [people] = usePeopleStore();
   const [loading, setLoading] = useState(false);

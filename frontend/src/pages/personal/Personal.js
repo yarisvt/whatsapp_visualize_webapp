@@ -6,7 +6,6 @@ import { usePeopleStore } from "../../context/PeopleContext";
 import PageWrapper from "../../components/page/PageWrapper";
 import HeatMap from "../../components/graphs/HeatMap";
 
-import "./personal.scss";
 
 function Personal() {
   const [people] = usePeopleStore();

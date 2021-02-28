@@ -41,8 +41,11 @@ function HBarChart(props) {
     yaxis: {
       labels: {
         show: isMobile,
+        style: {
+          fontSize: '1rem',
       },
-    },
+    }
+  },
     colors: ["#f00", "#ffd700", "#c71585", "#0f0", "#117519", "#00f", "#0ff"],
   };
 
