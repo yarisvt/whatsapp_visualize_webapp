@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "node -r dotenv/config ./src/server.js"
+    "start": "node -r dotenv/config ./src/server.js",
+    "dev": "nodemon -r dotenv/config ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7"
   }
 }
