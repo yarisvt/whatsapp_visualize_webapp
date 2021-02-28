@@ -6,13 +6,11 @@ function HeatMap(props) {
   const options = {
     chart: {
       type: "heatmap",
-      height: 350,
-      width: "100%",
     },
     colors: ["#008FFB"],
     xaxis: {
       type: "category",
-      categories
+      categories,
     },
     title: {
       text: title,
@@ -23,13 +21,13 @@ function HeatMap(props) {
   };
 
   return (
-    <div id="chart">
+    <div id="chart" className="mt-3">
       <ReactApexChart
         options={options}
         series={data}
         type="heatmap"
-        height={350}
-        width={600}
+        height={400}
+        width="100%"
       />
     </div>
   );

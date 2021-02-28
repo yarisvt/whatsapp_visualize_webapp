@@ -1,31 +1,52 @@
+import { useState, useEffect } from "react";
+
 import ReactApexChart from "react-apexcharts";
 
 function HBarChart(props) {
   const { title, categories, data } = props;
-  const series = [{ name: 'Count', data }];
+  const [isMobile, setMobile] = useState(window.innerWidth >= 1200);
+  const series = [{ name: "Count", data }];
+
+  const updateMedia = () => {
+    setMobile(window.innerWidth >= 1200);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   const options = {
     chart: {
       type: "bar",
-      height: 350,
-      width: "100%"
     },
     title: {
-      text: title
+      text: title,
     },
     plotOptions: {
       bar: {
         horizontal: true,
-        distributed: true
+        distributed: true,
       },
     },
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     xaxis: {
-      categories
+      categories,
     },
-    colors: ['#f00', '#ffd700', '#c71585', '#0f0', '#117519', '#00f', '#0ff']
+    legend: {
+      show: !isMobile,
+    },
+    yaxis: {
+      labels: {
+        show: isMobile,
+        style: {
+          fontSize: '1rem',
+      },
+    }
+  },
+    colors: ["#f00", "#ffd700", "#c71585", "#0f0", "#117519", "#00f", "#0ff"],
   };
 
   return (
@@ -34,8 +55,8 @@ function HBarChart(props) {
         options={options}
         series={series}
         type="bar"
-        height={350}
-        width={600}
+        height={400}
+        width="100%"
       />
     </div>
   );
