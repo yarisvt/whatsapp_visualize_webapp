@@ -3,11 +3,11 @@ function sqlResultToTimeSeriesLineChart(array, replaceNull) {
   const years = [...new Set(array.map((e) => e.year))];
   const persons = [...new Set(array.map((e) => e.name))];
   const categories = [];
-  let series = [];
+  const series = [];
 
   years.forEach((year) => {
     categories.push(
-      ...Array.from({ length: 12 }, (x, i) => i + 1 + "-" + year)
+      ...Array.from({ length: 12 }, (x, i) => i + 1 + '-' + year)
     );
   });
 
@@ -74,7 +74,9 @@ function replaceNullValues(arr) {
 
 function trimLastNullValues(arr, longestLength) {
   for (let i = arr.length - 1; i >= 0; i--) {
-    if (arr.length <= longestLength + 1) break;
+    if (arr.length <= longestLength + 1) {
+      break; 
+    }
     if (!arr[i]) {
       arr.splice(i, 1);
     } else {

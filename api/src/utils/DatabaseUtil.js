@@ -1,8 +1,8 @@
-const consola = require("consola");
-const moment = require("moment");
-const { readFileSync } = require("fs");
-const { Person } = require("../models/Person");
-const { Word } = require("../models/Word");
+const consola = require('consola');
+const moment = require('moment');
+const { readFileSync } = require('fs');
+const { Person } = require('../models/Person');
+const { Word } = require('../models/Word');
 
 const MESSAGE_PATTERN = /^\u200e?\[(?<time>\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2})\] (?<sender>.*?): (?<message>.*)$/;
 const REPLACE_PATTERN = /[!,."'`?()]+/g;

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import PulseLoader from "react-spinners/PulseLoader";
-import { Button, Col, Form } from "react-bootstrap";
+import React, { useState } from 'react';
+import PulseLoader from 'react-spinners/PulseLoader';
+import { Button, Col, Form } from 'react-bootstrap';
 
 import { usePeopleStore } from '../../context/PeopleContext';
 import PageWrapper from '../../components/page/PageWrapper';
@@ -61,7 +61,7 @@ function Personal() {
         No data available
       </div>
     );
-  } else if (resultType === "line" || resultType === "cumsum") {
+  } else if (resultType === 'line' || resultType === 'cumsum') {
     content = (
       <TimeSeriesLineChart
         title={lastWords ? `Words: ${lastWords}` : 'Messages'}

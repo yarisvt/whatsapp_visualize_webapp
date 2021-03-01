@@ -1,6 +1,6 @@
-const consola = require("consola");
-const { readdirSync, lstatSync } = require("fs");
-const { join } = require("path");
+const consola = require('consola');
+const { readdirSync, lstatSync } = require('fs');
+const { join } = require('path');
 
 function readRoutesFromDirectory(server, directory) {
   const routes = readdirSync(directory);

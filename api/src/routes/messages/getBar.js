@@ -1,27 +1,27 @@
-const consola = require("consola");
-const { QueryTypes } = require("sequelize");
+const consola = require('consola');
+const { QueryTypes } = require('sequelize');
 const {
   sqlResultToTimeSeriesLineChart,
-} = require("../../utils/TimeSeriesLineChartUtil");
-const { sequelize } = require("../../database");
-const { Response } = require("../../objects/Response");
+} = require('../../utils/TimeSeriesLineChartUtil');
+const { sequelize } = require('../../database');
+const { Response } = require('../../objects/Response');
 
 module.exports = {
-  path: "/api/messages/bar", // ?words=[A-Za-z0-9, ]+&monthly=true|false
-  method: "get",
+  path: '/api/messages/bar', // ?words=[A-Za-z0-9, ]+&monthly=true|false
+  method: 'get',
   middlewares: [],
   readRequest: async (req, res) => {
     if (req.query.words) {
       sequelize
         .query(
-          "SELECT PersonId, COUNT(*) as count " +
-            "FROM Messages as m, MessageWords as mw, Words as w " +
-            "WHERE m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) " +
-            "GROUP BY PersonId " +
-            "ORDER BY PersonId",
+          'SELECT PersonId, COUNT(*) as count ' +
+            'FROM Messages as m, MessageWords as mw, Words as w ' +
+            'WHERE m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) ' +
+            'GROUP BY PersonId ' +
+            'ORDER BY PersonId',
           {
             replacements: {
-              words: req.query.words.split(","),
+              words: req.query.words.split(','),
             },
             type: QueryTypes.SELECT,
           }
@@ -37,12 +37,12 @@ module.exports = {
           consola.error(err);
           res
             .status(500)
-            .json(new Response(false, "An error occured quering the data"));
+            .json(new Response(false, 'An error occured quering the data'));
         });
     } else {
       sequelize
         .query(
-          "SELECT COUNT(*) as count FROM Messages GROUP BY PersonId ORDER BY Personid",
+          'SELECT COUNT(*) as count FROM Messages GROUP BY PersonId ORDER BY Personid',
           {
             type: QueryTypes.SELECT,
           }
@@ -59,7 +59,7 @@ module.exports = {
           consola.error(err);
           res
             .status(500)
-            .json(new Response(false, "An error occured quering the data"));
+            .json(new Response(false, 'An error occured quering the data'));
         });
     }
   },

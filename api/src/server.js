@@ -6,7 +6,7 @@ const { readdirSync } = require('fs');
 const { join } = require('path');
 const { requestLogging } = require('./middlewares/logging');
 
-const { readRoutesFromDirectory } = require("./utils/readRoutesFromDirectory");
+const { readRoutesFromDirectory } = require('./utils/readRoutesFromDirectory');
 const { sequelize } = require('./database');
 require('./models/Word');
 require('./models/Person');
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
   server.use(cors());
 }
 
-readRoutesFromDirectory(server, join(__dirname, "routes"));
+readRoutesFromDirectory(server, join(__dirname, 'routes'));
 
 server.listen(process.env.PORT, () => {
   consola.success(`Successfully listening on port: ${process.env.PORT}`);
