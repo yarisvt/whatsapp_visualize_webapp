@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import PulseLoader from "react-spinners/PulseLoader";
-import { Button, Col, Form, InputGroup } from "react-bootstrap";
+import React, { useState } from 'react';
+import PulseLoader from 'react-spinners/PulseLoader';
+import { Button, Col, Form, InputGroup } from 'react-bootstrap';
 
-import { usePeopleStore } from "../../context/PeopleContext";
-import PageWrapper from "../../components/page/PageWrapper";
-import HeatMap from "../../components/graphs/HeatMap";
+import { usePeopleStore } from '../../context/PeopleContext';
+import PageWrapper from '../../components/page/PageWrapper';
+import HeatMap from '../../components/graphs/HeatMap';
 
 
 function Personal() {
@@ -14,10 +14,10 @@ function Personal() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(false);
   const [monthly, setMonthly] = useState(false);
-  const [words, setWords] = useState("");
-  const [lastWords, setLastWords] = useState("");
+  const [words, setWords] = useState('');
+  const [lastWords, setLastWords] = useState('');
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setLoading(true);
     setResult(null);
     setError(false);
@@ -35,7 +35,7 @@ function Personal() {
       })
       .catch((err) => {
         setError(true);
-        setResult("Failed to connect to the server");
+        setResult('Failed to connect to the server');
         setLoading(false);
         console.error(err);
       });
@@ -59,28 +59,28 @@ function Personal() {
         No data available
       </div>
     );
-  } else if (result && typeof result === "object") {
+  } else if (result && typeof result === 'object') {
     content = (
       <HeatMap
-        title={lastWords ? `Words: ${lastWords}` : "Messages"}
+        title={lastWords ? `Words: ${lastWords}` : 'Messages'}
         categories={[
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "Juli",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'Juli',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
         ]}
         data={result}
       />
     );
-  } else if (typeof result === "number") {
+  } else if (typeof result === 'number') {
     content = (
       <div className="message-box">
         {lastWords && <h3>Words: {lastWords}</h3>}

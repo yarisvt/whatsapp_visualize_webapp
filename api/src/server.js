@@ -8,7 +8,7 @@ const { requestLogging } = require('./middlewares/logging');
 
 const { sequelize } = require('./database');
 require('./models/Word');
-require('./models/Person')
+require('./models/Person');
 require('./models/Message');
 sequelize.sync();
 
@@ -18,16 +18,16 @@ server.use(helmet());
 server.use(requestLogging);
 
 if (process.env.NODE_ENV === 'development') {
-    server.use(cors());
+  server.use(cors());
 }
 
 const routes = readdirSync(join(__dirname, 'routes'));
 routes.forEach(route => {
-    const r = require(join(__dirname, 'routes', route));
-    server[r.method](r.path, ...r.middlewares, r.readRequest);
-    consola.info(`Registered route at ${r.method.toUpperCase()} ${r.path}`);
+  const r = require(join(__dirname, 'routes', route));
+  server[r.method](r.path, ...r.middlewares, r.readRequest);
+  consola.info(`Registered route at ${r.method.toUpperCase()} ${r.path}`);
 });
 
 server.listen(process.env.PORT, () => {
-    consola.success(`Successfully listening on port: ${process.env.PORT}`);
+  consola.success(`Successfully listening on port: ${process.env.PORT}`);
 }).on('error', consola.error);

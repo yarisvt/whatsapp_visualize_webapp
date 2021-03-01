@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { PeopleProvider } from './context/PeopleContext';
 import Header from './components/header/Header';
@@ -10,11 +11,11 @@ function App() {
     <BrowserRouter>
       <PeopleProvider>
         <Header/>
-          <Switch>
-            <Route exact path='/' component={Group}/>
-            <Route exact path='/group' component={Group}/>
-            <Route exact path='/personal' component={Personal}/>
-          </Switch>
+        <Switch>
+          <Route exact path='/' component={Group}/>
+          <Route exact path='/group' component={Group}/>
+          <Route exact path='/personal' component={Personal}/>
+        </Switch>
       </PeopleProvider>
     </BrowserRouter>
   );

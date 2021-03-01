@@ -1,19 +1,20 @@
-import ReactApexChart from "react-apexcharts";
+import React from 'react';
+import ReactApexChart from 'react-apexcharts';
 
 function TimeSeriesLineChart(props) {
   const { title, data } = props;
 
   const options = {
     chart: {
-      type: "line",
+      type: 'line',
       zoom: {
-        type: "x",
+        type: 'x',
         enabled: true,
         autoScaleYaxis: true,
       },
     },
     xaxis: {
-      type: "categories",
+      type: 'categories',
       categories: data.categories,
     },
     title: {
@@ -22,9 +23,9 @@ function TimeSeriesLineChart(props) {
     dataLabels: {
       enabled: false,
     },
-    colors: ["#f00", "#ffd700", "#c71585", "#0f0", "#117519", "#00f", "#0ff"],
+    colors: ['#f00', '#ffd700', '#c71585', '#0f0', '#117519', '#00f', '#0ff'],
     stroke: {
-      curve: "straight",
+      curve: 'straight',
     },
   };
 
