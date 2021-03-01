@@ -14,7 +14,7 @@ module.exports = {
     if (req.query.words) {
       sequelize
         .query(
-          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, SUM(count(p.id)) OVER (PARTITION BY name ORDER BY YEAR(time), MONTH(time)) AS count ' +
+          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count ' +
             'FROM Messages as m, People as p, Words as w, MessageWords as mw ' +
             'WHERE p.id = m.PersonId AND m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) ' +
             'GROUP BY year, month, PersonId ' +
@@ -42,7 +42,7 @@ module.exports = {
     } else {
       sequelize
         .query(
-          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, SUM(count(People.id)) OVER (PARTITION BY name ORDER BY YEAR(time), MONTH(time)) AS count ' +
+          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count ' +
             'FROM Messages, People ' +
             'WHERE People.id = Messages.PersonId ' +
             'GROUP BY year, month, PersonId ' +

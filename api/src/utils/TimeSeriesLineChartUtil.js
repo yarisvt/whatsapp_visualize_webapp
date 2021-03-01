@@ -1,5 +1,5 @@
 // Expects { year: \d{4,}, month: \d{1,2}, name: \w+, count: \d+ }
-function sqlResultToTimeSeriesLineChart(array, replaceNull) {
+function sqlResultToTimeSeriesLineChart(array, cumulative) {
   const years = [...new Set(array.map((e) => e.year))];
   const persons = [...new Set(array.map((e) => e.name))];
   const categories = [];
@@ -28,19 +28,31 @@ function sqlResultToTimeSeriesLineChart(array, replaceNull) {
     series.push(entry);
   });
 
-  const longestLength = getLongestLength(series);
-  series.forEach((serie) => trimLastNullValues(serie.data, longestLength));
+  trimLastNullValues(series, getLongestLength(series));
 
-  if (replaceNull) {
-    series.forEach((serie) => {
-      replaceNullValues(serie.data);
-    });
+  if (cumulative) {
+    calculateCumulative(series);
   }
 
   return {
     series,
     categories,
   };
+}
+
+function trimLastNullValues(arr, longestLength) {
+  arr.forEach((elt) => {
+    for (let i = elt.data.length - 1; i >= 0; i--) {
+      if (elt.data.length <= longestLength + 1) {
+        break;
+      }
+      if (!elt.data[i]) {
+        elt.data.splice(i, 1);
+      } else {
+        break;
+      }
+    }
+  });
 }
 
 function getLongestLength(arr) {
@@ -58,31 +70,16 @@ function getLongestLength(arr) {
   return lastIndex;
 }
 
-function replaceNullValues(arr) {
-  const idx = arr.indexOf(undefined);
-
-  if (idx === -1) {
-    return arr;
-  }
-  if (idx === 0) {
-    arr[idx] = 0;
-  } else {
-    arr[idx] = arr[idx - 1];
-  }
-  return replaceNullValues(arr);
-}
-
-function trimLastNullValues(arr, longestLength) {
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (arr.length <= longestLength + 1) {
-      break; 
-    }
-    if (!arr[i]) {
-      arr.splice(i, 1);
-    } else {
-      break;
-    }
-  }
+function calculateCumulative(series) {
+  series.forEach((serie) => {
+    const newData = serie.data.reduce((sum, value, idx) => {
+      if (!value) {
+        value = 0; 
+      }
+      return [...sum, value + (sum[idx - 1] || 0)];
+    }, []);
+    serie.data = newData;
+  });
 }
 
 module.exports = { sqlResultToTimeSeriesLineChart, trimLastNullValues };
