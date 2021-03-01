@@ -4,13 +4,12 @@ WORKDIR '/app'
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 
 RUN npm install npm -g --silent
-RUN npm install --silent
+RUN npm ci --only=production --silent
 
-COPY . ./
+COPY . .
 
 EXPOSE 5000
 
