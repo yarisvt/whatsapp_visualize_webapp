@@ -1,15 +1,16 @@
-import ReactApexChart from "react-apexcharts";
+import React from 'react';
+import ReactApexChart from 'react-apexcharts';
 
 function HeatMap(props) {
   const { title, categories, data } = props;
 
   const options = {
     chart: {
-      type: "heatmap",
+      type: 'heatmap',
     },
-    colors: ["#008FFB"],
+    colors: ['#008FFB'],
     xaxis: {
-      type: "category",
+      type: 'category',
       categories,
     },
     title: {

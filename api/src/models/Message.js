@@ -6,20 +6,20 @@ const { sequelize } = require('../database');
 class Message extends Model {}
 
 Message.init({
-    id: {
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false
-    },
-    time: {
-        primaryKey: false,
-        type: DataTypes.DATE,
-        allowNull: false
-    }
+  id: {
+    primaryKey: true,
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false
+  },
+  time: {
+    primaryKey: false,
+    type: DataTypes.DATE,
+    allowNull: false
+  }
 }, {
-    timestamps: false,
-    sequelize
+  timestamps: false,
+  sequelize
 });
 
 Message.belongsToMany(Word, { through: MessageWord });

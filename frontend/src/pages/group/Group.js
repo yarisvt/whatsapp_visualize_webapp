@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import PulseLoader from "react-spinners/PulseLoader";
-import { Button, Col, Form, InputGroup } from "react-bootstrap";
+import React, { useState } from 'react';
+import PulseLoader from 'react-spinners/PulseLoader';
+import { Button, Col, Form, InputGroup } from 'react-bootstrap';
 
-import { usePeopleStore } from "../../context/PeopleContext";
-import PageWrapper from "../../components/page/PageWrapper";
-import HBarChart from "../../components/graphs/HBarChart";
-import TimeSeriesLineChart from "../../components/graphs/TimeSeriesLineChart";
+import { usePeopleStore } from '../../context/PeopleContext';
+import PageWrapper from '../../components/page/PageWrapper';
+import HBarChart from '../../components/graphs/HBarChart';
+import TimeSeriesLineChart from '../../components/graphs/TimeSeriesLineChart';
 
 function Personal() {
   const [people] = usePeopleStore();
@@ -14,10 +14,10 @@ function Personal() {
   const [resultType, setResultType] = useState(null);
   const [error, setError] = useState(false);
   const [monthly, setMonthly] = useState(false);
-  const [words, setWords] = useState("");
-  const [lastWords, setLastWords] = useState("");
+  const [words, setWords] = useState('');
+  const [lastWords, setLastWords] = useState('');
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setLoading(true);
     setResult(null);
     setError(false);
@@ -31,13 +31,13 @@ function Personal() {
         if (!response.success) {
           setError(true);
         } else {
-          setResultType(monthly ? "line" : "bar");
+          setResultType(monthly ? 'line' : 'bar');
         }
         setLoading(false);
       })
       .catch((err) => {
         setError(true);
-        setResult("Failed to connect to the server");
+        setResult('Failed to connect to the server');
         setLoading(false);
         console.error(err);
       });
@@ -61,17 +61,17 @@ function Personal() {
         No data available
       </div>
     );
-  } else if (resultType === "line") {
+  } else if (resultType === 'line') {
     content = (
       <TimeSeriesLineChart
-        title={lastWords ? `Words: ${lastWords}` : "Messages"}
+        title={lastWords ? `Words: ${lastWords}` : 'Messages'}
         data={result}
       />
     );
-  } else if (resultType === "bar") {
+  } else if (resultType === 'bar') {
     content = (
       <HBarChart
-        title={lastWords ? `Words: ${lastWords}` : "Messages"}
+        title={lastWords ? `Words: ${lastWords}` : 'Messages'}
         categories={people.map((p) => p.name)}
         data={result}
       />

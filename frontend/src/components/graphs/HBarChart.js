@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import ReactApexChart from "react-apexcharts";
+import ReactApexChart from 'react-apexcharts';
 
 function HBarChart(props) {
   const { title, categories, data } = props;
   const [isMobile, setMobile] = useState(window.innerWidth >= 1200);
-  const series = [{ name: "Count", data }];
+  const series = [{ name: 'Count', data }];
 
   const updateMedia = () => {
     setMobile(window.innerWidth >= 1200);
   };
 
   useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
+    window.addEventListener('resize', updateMedia);
+    return () => window.removeEventListener('resize', updateMedia);
   });
 
   const options = {
     chart: {
-      type: "bar",
+      type: 'bar',
     },
     title: {
       text: title,
@@ -43,10 +43,10 @@ function HBarChart(props) {
         show: isMobile,
         style: {
           fontSize: '1rem',
-      },
-    }
-  },
-    colors: ["#f00", "#ffd700", "#c71585", "#0f0", "#117519", "#00f", "#0ff"],
+        },
+      }
+    },
+    colors: ['#f00', '#ffd700', '#c71585', '#0f0', '#117519', '#00f', '#0ff'],
   };
 
   return (

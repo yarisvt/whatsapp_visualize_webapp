@@ -1,0 +1,65 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "comma-spacing": ["error", { "before": false, "after": true }],
+        "object-curly-spacing": ["error", "always"],
+        "block-spacing": "error",
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "space-infix-ops": [
+            "error"
+        ],
+        "vars-on-top": "warn",
+        "no-unused-expressions": "warn",
+        "eqeqeq": "warn",
+        "default-case": "error",
+        "max-classes-per-file": "error",
+        "no-console": [
+            "error",
+            {
+                "allow": [
+                    "warn",
+                    "error"
+                ]
+            }
+        ],
+        "object-shorthand": "error",
+        "eol-last": ["error", "always"],
+        "prefer-const": [
+            "error",
+            {
+                "destructuring": "all",
+                "ignoreReadBeforeAssign": false
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "space-before-blocks":"error",
+        "curly": ["error", "all"],
+        "brace-style": 2
+    }
+}
