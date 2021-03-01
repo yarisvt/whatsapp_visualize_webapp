@@ -7,7 +7,7 @@ function sqlResultToTimeSeriesLineChart(array, cumulative) {
 
   years.forEach((year) => {
     categories.push(
-      ...Array.from({ length: 12 }, (x, i) => i + 1 + '-' + year)
+      ...Array.from({ length: 12 }, (x, i) => i + 1 + "-" + year)
     );
   });
 
@@ -58,9 +58,8 @@ function trimLastNullValues(arr, longestLength) {
 function getLongestLength(arr) {
   let lastIndex = -1;
   arr.forEach((data) => {
-    data.data.forEach((elt) => {
+    data.data.forEach((elt, index) => {
       if (elt) {
-        const index = data.data.indexOf(elt);
         if (index > lastIndex) {
           lastIndex = index;
         }
@@ -74,7 +73,7 @@ function calculateCumulative(series) {
   series.forEach((serie) => {
     const newData = serie.data.reduce((sum, value, idx) => {
       if (!value) {
-        value = 0; 
+        value = 0;
       }
       return [...sum, value + (sum[idx - 1] || 0)];
     }, []);
