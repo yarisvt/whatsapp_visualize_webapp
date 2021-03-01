@@ -7,7 +7,7 @@ function sqlResultToTimeSeriesLineChart(array, cumulative) {
 
   years.forEach((year) => {
     categories.push(
-      ...Array.from({ length: 12 }, (x, i) => i + 1 + "-" + year)
+      ...Array.from({ length: 12 }, (x, i) => i + 1 + '-' + year)
     );
   });
 
