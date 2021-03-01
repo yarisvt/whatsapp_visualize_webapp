@@ -17,8 +17,8 @@ module.exports = {
           'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count ' +
             'FROM Messages as m, People as p, Words as w, MessageWords as mw ' +
             'WHERE p.id = m.PersonId AND m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) ' +
-            'GROUP BY PersonId, year, month ' +
-            'ORDER BY PersonId, year, month',
+            'GROUP BY year, month, PersonId ' +
+            'ORDER BY year, month, PersonId',
           {
             replacements: {
               words: req.query.words.split(','),
@@ -43,8 +43,8 @@ module.exports = {
           'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count ' +
             'FROM Messages, People ' +
             'WHERE People.id = Messages.PersonId ' +
-            'GROUP BY PersonId, year, month ' +
-            'ORDER BY PersonId, year, month',
+            'GROUP BY year, month, PersonId ' +
+            'ORDER BY year, month, PersonId',
           {
             type: QueryTypes.SELECT,
           }
