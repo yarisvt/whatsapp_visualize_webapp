@@ -28,8 +28,8 @@ function sqlResultToTimeSeriesLineChart(array, replaceNull) {
     series.push(entry);
   });
 
-  // TODO
-  //   series.forEach((serie) => trimLastNullValues(serie.data));
+  const longestLength = getLongestLength(series);
+  series.forEach((serie) => trimLastNullValues(serie.data, longestLength));
 
   if (replaceNull) {
     series.forEach((serie) => {
@@ -43,22 +43,38 @@ function sqlResultToTimeSeriesLineChart(array, replaceNull) {
   };
 }
 
-function replaceNullValues(series) {
-  const idx = series.indexOf(undefined);
-
-  if (idx === -1) {
-    return series;
-  }
-  if (idx === 0) {
-    series[idx] = 0;
-  } else {
-    series[idx] = series[idx - 1];
-  }
-  return replaceNullValues(series);
+function getLongestLength(arr) {
+  let lastIndex = -1;
+  arr.forEach((data) => {
+    data.data.forEach((elt) => {
+      if (elt) {
+        const index = data.data.indexOf(elt);
+        if (index > lastIndex) {
+          lastIndex = index;
+        }
+      }
+    });
+  });
+  return lastIndex;
 }
 
-function trimLastNullValues(arr) {
+function replaceNullValues(arr) {
+  const idx = arr.indexOf(undefined);
+
+  if (idx === -1) {
+    return arr;
+  }
+  if (idx === 0) {
+    arr[idx] = 0;
+  } else {
+    arr[idx] = arr[idx - 1];
+  }
+  return replaceNullValues(arr);
+}
+
+function trimLastNullValues(arr, longestLength) {
   for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr.length <= longestLength + 1) break;
     if (!arr[i]) {
       arr.splice(i, 1);
     } else {
