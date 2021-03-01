@@ -4,15 +4,15 @@ const { sequelize } = require('../database');
 class MessageWord extends Model {}
 
 MessageWord.init({
-    id: {
-        primaryKey: true,
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        allowNull: false
-    }
+  id: {
+    primaryKey: true,
+    type: DataTypes.BIGINT,
+    autoIncrement: true,
+    allowNull: false
+  }
 }, {
-    timestamps: false,
-    sequelize
+  timestamps: false,
+  sequelize
 });
 
 module.exports = { MessageWord };

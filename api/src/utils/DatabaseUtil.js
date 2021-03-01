@@ -12,7 +12,7 @@ const URL_PATTERN = /(^|\s)https?:\/\/.*?($|\s)/g;
 const people = new Map();
 
 async function populateDatabase(path) {
-  const data = readFileSync(path, "UTF-8");
+  const data = readFileSync(path, 'UTF-8');
   const lines = data.split(/\r?\n/);
 
   let person;
@@ -22,11 +22,13 @@ async function populateDatabase(path) {
     const l = lines[line].trim();
     let m;
 
-    if (l.indexOf("⬅️") !== -1) continue;
+    if (l.indexOf('⬅️') !== -1) {
+      continue; 
+    }
 
     try {
       let words;
-      if ((m = l.match(MESSAGE_PATTERN))) {
+      if (m = l.match(MESSAGE_PATTERN)) {
         // Check if sender was cached
         person = people.get(m.groups.sender);
         if (!person) {
@@ -39,39 +41,31 @@ async function populateDatabase(path) {
           // Cache sender
           people.set(m.groups.sender, person);
         }
-        message = await person.createMessage({
-          time: moment(m.groups.time, "DD-MM-YYYY hh:mm:ss"),
-        });
+        message = await person.createMessage({ time: moment(m.groups.time, 'DD-MM-YYYY hh:mm:ss') });
         // Replace media for queries
-        if (l.indexOf("\u200e") !== -1) {
-          if (l.indexOf("afbeelding weggelaten") !== -1) {
-            words = ["!pic"];
-          } else if (l.indexOf("GIF weggelaten") !== -1) {
-            words = ["!gif"];
-          } else if (l.indexOf("video weggelaten") !== -1) {
-            words = ["!vid"];
-          } else if (l.indexOf("document weggelaten") !== -1) {
-            words = ["!doc"];
+        if (l.indexOf('\u200e') !== -1) {
+          if (l.indexOf('afbeelding weggelaten') !== -1) {
+            words = ['!pic'];
+          } else if (l.indexOf('GIF weggelaten') !== -1) {
+            words = ['!gif'];
+          } else if (l.indexOf('video weggelaten') !== -1) {
+            words = ['!vid'];
+          } else if (l.indexOf('document weggelaten') !== -1) {
+            words = ['!doc'];
           }
         } else {
-          words = m.groups.message
-            .toLowerCase()
-            .replace(REPLACE_PATTERN, "")
-            .replace(URL_PATTERN, " !url ")
-            .split(SPLIT_PATTERN);
+          words = m.groups.message.toLowerCase().replace(REPLACE_PATTERN, '').replace(URL_PATTERN, ' !url ').split(SPLIT_PATTERN);
         }
       } else {
-        words = l
-          .toLowerCase()
-          .replace(REPLACE_PATTERN, "")
-          .replace(URL_PATTERN, " !url ")
-          .split(SPLIT_PATTERN);
+        words = l.toLowerCase().replace(REPLACE_PATTERN, '').replace(URL_PATTERN, ' !url ').split(SPLIT_PATTERN);
       }
 
       for (const word in words) {
         const wo = words[word].trim();
         // i.e. empty string
-        if (!Boolean(wo)) continue;
+        if (!Boolean(wo)) {
+          continue; 
+        }
 
         let w = await Word.findOne({ where: { word: wo } });
         if (!w) {
