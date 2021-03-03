@@ -4,7 +4,7 @@
       "name": "Backend",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm start",
+      "command": "npm run dev",
       "cwd": "${workspaceFolder}/api",
       "env": {
         "NODE_ENV": "development"
