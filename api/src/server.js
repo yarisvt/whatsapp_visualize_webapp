@@ -2,7 +2,6 @@ const express = require('express');
 const consola = require('consola');
 const cors = require('cors');
 const helmet = require('helmet');
-const { readdirSync } = require('fs');
 const { join } = require('path');
 const { requestLogging } = require('./middlewares/logging');
 

@@ -1,5 +1,8 @@
+const { addMissingYears } = require('./DataProcessingUtils');
+
 // Expects { year: \d{4,}, month: \d{1,2}, count: \d+ }
 function sqlResultToHeatMapSeries(array) {
+  array = addMissingYears(array, addName = false);
   const years = [... new Set(array.map(e => e.year))];
   const result = years.map(year => {
     return { name: year, data: Array(12) };

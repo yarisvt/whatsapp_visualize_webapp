@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/yarisvt/whatsapp_visualize_webapp#readme",
   "dependencies": {
+    "chokidar": "^3.5.1",
     "consola": "^2.15.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
+    "ignore-by-default": "^2.0.0",
     "mariadb": "^2.5.3",
     "sequelize": "^6.5.0"
   },
