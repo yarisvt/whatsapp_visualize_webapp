@@ -58,28 +58,22 @@ function trimLastNullValues(arr, longestLength) {
 
 function getLongestLength(arr) {
   let lastIndex = -1;
-  arr.forEach((data) => {
-    data.data.forEach((elt, index) => {
-      if (elt) {
-        if (index > lastIndex) {
-          lastIndex = index;
-        }
+  arr.forEach(({ data }) => {
+    data.forEach((elt, index) => {
+      if (elt && index > lastIndex) {
+        lastIndex = index;
       }
     });
   });
   return lastIndex;
 }
 
+function cumalativeSum(sum) {
+  return (value) => sum += value;
+}
+
 function calculateCumulative(series) {
-  series.forEach((serie) => {
-    const newData = serie.data.reduce((sum, value, idx) => {
-      if (!value) {
-        value = 0;
-      }
-      return [...sum, value + (sum[idx - 1] || 0)];
-    }, []);
-    serie.data = newData;
-  });
+  series.forEach((serie) => serie.data = serie.data.map(cumalativeSum(0)));
 }
 
 module.exports = { trimLastNullValues, getLongestLength, calculateCumulative, addMissingYears };

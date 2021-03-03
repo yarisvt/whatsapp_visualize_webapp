@@ -21,7 +21,7 @@ function sqlResultToTimeSeriesLineChart(array, cumulative) {
     };
 
     years.forEach((year) => {
-      const newYear = Array(12);
+      const newYear = Array(12).fill(0);
       array
         .filter((e) => e.year === year && e.name === person)
         .forEach((m) => (newYear[m.month - 1] = m.count));
