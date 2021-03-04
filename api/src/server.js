@@ -10,7 +10,7 @@ const { sequelize } = require('./database');
 require('./models/Word');
 require('./models/Person');
 require('./models/Message');
-sequelize.sync();
+sequelize.sync().catch(consola.error);
 
 const server = express();
 
