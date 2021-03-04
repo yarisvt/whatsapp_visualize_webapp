@@ -17,7 +17,8 @@ function Personal() {
   const [words, setWords] = useState('');
   const [lastWords, setLastWords] = useState('');
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     setLoading(true);
     setResult(null);
     setError(false);
@@ -80,7 +81,7 @@ function Personal() {
 
   return (
     <div className="content">
-      <Form>
+      <Form onSubmit={handleClick}>
         <Form.Row>
           <Col>
             <Form.Group>
@@ -101,7 +102,7 @@ function Personal() {
             <Form.Control
               disabled={loading}
               onChange={(e) => setGraph(e.target.value)}
-              defaultValue="0"
+              defaultValue="bar"
               as="select"
             >
               <option value="0" disabled>

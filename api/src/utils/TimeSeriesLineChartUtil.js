@@ -1,10 +1,11 @@
+const { Person } = require('../models/Person');
 const { trimLastNullValues, getLongestLength, calculateCumulative, addMissingYears } = require('./DataProcessingUtils');
 
-// Expects { year: \d{4,}, month: \d{1,2}, name: \w+, count: \d+ }
-function sqlResultToTimeSeriesLineChart(array, cumulative) {
+// Expects { year: \d{4,}, month: \d{1,2}, count: \d+, PersonId: \d+ }
+async function sqlResultToTimeSeriesLineChart(array, cumulative) {
   array = addMissingYears(array);
   const years = [...new Set(array.map((e) => e.year))];
-  const persons = [...new Set(array.map((e) => e.name))];
+  const persons = await Person.findAll();
   const categories = [];
   const series = [];
   
@@ -16,19 +17,19 @@ function sqlResultToTimeSeriesLineChart(array, cumulative) {
 
   persons.forEach((person) => {
     const entry = {
-      name: person,
+      name: person.name,
       data: [],
     };
 
     years.forEach((year) => {
       const newYear = Array(12).fill(0);
       array
-        .filter((e) => e.year === year && e.name === person)
+        .filter((e) => e.year === year && e.PersonId === person.id)
         .forEach((m) => (newYear[m.month - 1] = m.count));
       entry.data.push(...newYear);
     });
 
-    series.push(entry);
+    series[person.id - 1] = entry;
   });
   
  

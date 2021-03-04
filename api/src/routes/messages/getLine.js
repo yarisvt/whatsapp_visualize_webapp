@@ -14,11 +14,11 @@ module.exports = {
     if (req.query.words) {
       sequelize
         .query(
-          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count ' +
-            'FROM Messages as m, People as p, Words as w, MessageWords as mw ' +
-            'WHERE p.id = m.PersonId AND m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) ' +
+          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, COUNT(*) as count, PersonId ' +
+            'FROM Messages as m, Words as w, MessageWords as mw ' +
+            'WHERE m.id = mw.MessageId AND mw.WordId = w.id AND w.word IN (:words) ' +
             'GROUP BY year, month, PersonId ' +
-            'ORDER BY year, month, PersonId',
+            'ORDER BY year, month',
           {
             replacements: {
               words: req.query.words.split(','),
@@ -26,10 +26,10 @@ module.exports = {
             type: QueryTypes.SELECT,
           }
         )
-        .then((result) => {
+        .then(async (result) => {
           res
             .status(200)
-            .json(new Response(true, sqlResultToTimeSeriesLineChart(result)));
+            .json(new Response(true, await sqlResultToTimeSeriesLineChart(result)));
         })
         .catch((err) => {
           consola.error(err);
@@ -40,19 +40,18 @@ module.exports = {
     } else {
       sequelize
         .query(
-          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, name, COUNT(*) as count ' +
-            'FROM Messages, People ' +
-            'WHERE People.id = Messages.PersonId ' +
+          'SELECT DATE_FORMAT(time, \'%Y\') AS year, DATE_FORMAT(time, \'%c\') AS month, COUNT(*) as count, PersonId ' +
+            'FROM Messages ' +
             'GROUP BY year, month, PersonId ' +
-            'ORDER BY year, month, PersonId',
+            'ORDER BY year, month',
           {
             type: QueryTypes.SELECT,
           }
         )
-        .then((result) => {
+        .then(async (result) => {
           res
             .status(200)
-            .json(new Response(true, sqlResultToTimeSeriesLineChart(result)));
+            .json(new Response(true, await sqlResultToTimeSeriesLineChart(result)));
         })
         .catch((err) => {
           consola.error(err);

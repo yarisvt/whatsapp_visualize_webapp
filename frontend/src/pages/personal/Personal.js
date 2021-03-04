@@ -17,7 +17,8 @@ function Personal() {
   const [words, setWords] = useState('');
   const [lastWords, setLastWords] = useState('');
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     setLoading(true);
     setResult(null);
     setError(false);
@@ -91,7 +92,7 @@ function Personal() {
 
   return (
     <div className="content">
-      <Form>
+      <Form onSubmit={handleClick}>
         <Form.Row>
           <Col>
             <Form.Group>
