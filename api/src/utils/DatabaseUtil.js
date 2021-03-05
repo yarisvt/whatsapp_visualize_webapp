@@ -45,13 +45,15 @@ async function populateDatabase(path) {
         // Replace media for queries
         if (l.indexOf('\u200e') !== -1) {
           if (l.indexOf('afbeelding weggelaten') !== -1) {
-            words = ['!pic'];
+            words = ['!img'];
           } else if (l.indexOf('GIF weggelaten') !== -1) {
             words = ['!gif'];
           } else if (l.indexOf('video weggelaten') !== -1) {
             words = ['!vid'];
           } else if (l.indexOf('document weggelaten') !== -1) {
             words = ['!doc'];
+          } else if (l.indexOf('sticker weggelaten') !== -1) {
+            words = ['!stk'];
           }
         } else {
           words = m.groups.message.toLowerCase().replace(REPLACE_PATTERN, '').replace(URL_PATTERN, ' !url ').split(SPLIT_PATTERN);

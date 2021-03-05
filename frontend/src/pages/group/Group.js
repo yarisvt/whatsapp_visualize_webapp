@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PulseLoader from 'react-spinners/PulseLoader';
-import { Button, Col, Form } from 'react-bootstrap';
 
 import { usePeopleStore } from '../../context/PeopleContext';
 import PageWrapper from '../../components/page/PageWrapper';
 import HBarChart from '../../components/graphs/HBarChart';
 import TimeSeriesLineChart from '../../components/graphs/TimeSeriesLineChart';
+
+import '../../styles/form.scss';
 
 function Personal() {
   const [people] = usePeopleStore();
@@ -81,29 +82,22 @@ function Personal() {
 
   return (
     <div className="content">
-      <Form onSubmit={handleClick}>
-        <Form.Row>
-          <Col>
-            <Form.Group>
-              <Form.Control
-                onChange={(e) => setWords(e.target.value)}
-                type="text"
-                placeholder="Enter words..."
-              />
-              <Form.Text className="text-muted">
-                You can search for multiple words by seperating them with a
-                comma (e.g. "word1,word2")
-              </Form.Text>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col>
-            <Form.Control
+      <form onSubmit={handleClick}>
+        <div className='row'>
+          <div className='col'>
+            <input
+              onChange={(e) => setWords(e.target.value)}
+              type="text"
+              placeholder="Enter words..."
+            />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <select
               disabled={loading}
               onChange={(e) => setGraph(e.target.value)}
               defaultValue="bar"
-              as="select"
             >
               <option value="0" disabled>
                 Select a graph...
@@ -113,15 +107,15 @@ function Personal() {
               </option>
               <option value="line">Line chart</option>
               <option value="cumsum">Cumulative line chart</option>
-            </Form.Control>
-          </Col>
-          <Col>
-            <Button disabled={loading} onClick={handleClick} variant="primary">
+            </select>
+          </div>
+          <div className='col'>
+            <button disabled={loading} onClick={handleClick}>
               Get results
-            </Button>
-          </Col>
-        </Form.Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
 
       {content}
     </div>

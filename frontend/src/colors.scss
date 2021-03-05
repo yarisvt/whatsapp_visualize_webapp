@@ -1,0 +1,37 @@
+.light {
+    $backgroundColor: #FEF7FF;
+    --backgroundColor: #{$backgroundColor};
+    --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
+    --darkBackgroundColor: #{darken($backgroundColor, 15%)};
+
+    $mainColor: #0081CF;
+    --mainColor: #{$mainColor};
+    --lightMainColor: #{lighten($mainColor, 15%)};
+    --darkMainColor: #{darken($mainColor, 15%)};
+
+    $textColor: #4B4453;
+    --textColor: #{$textColor};
+    --darkTextColor: #{darken($textColor, 15%)};
+
+    --highlightColor: #4FFBDF;
+    --contrastColor: #D65DB1;
+}
+
+.dark {
+    $backgroundColor: #424242;
+    --backgroundColor: #{$backgroundColor};
+    --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
+    --darkBackgroundColor: #{darken($backgroundColor, 15%)};
+
+    $mainColor: #29303F;
+    --mainColor: #{$mainColor};
+    --lightMainColor: #{lighten($mainColor, 15%)};
+    --darkMainColor: #{darken($mainColor, 15%)};
+
+    $textColor: #E8DBA1;
+    --textColor: #{$textColor};
+    --darkTextColor: #{darken($textColor, 15%)};
+
+    --highlightColor: #9BB899;
+    --contrastColor: #D37F5B;
+}

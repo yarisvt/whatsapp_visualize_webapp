@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useThemeStore } from '../../context/ThemeContext';
 
 function HeatMap(props) {
   const { title, categories, data } = props;
+  const [theme] = useThemeStore();
 
   const options = {
     chart: {
       type: 'heatmap',
+      background: 'none'
     },
-    colors: ['#008FFB'],
+    theme: {
+      mode: theme
+    },
+    colors: [theme === 'dark' ? '#f8ff32' : '#008FFB'],
     xaxis: {
       type: 'category',
       categories,
@@ -19,6 +25,10 @@ function HeatMap(props) {
     dataLabels: {
       enabled: false,
     },
+    stroke: {
+      width: 1,
+      colors: [theme === 'dark' ? '#fff' : '#ddd']
+    }
   };
 
   return (

@@ -1,0 +1,78 @@
+form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    .col {
+        display: flex;
+        flex: 1 1 0;
+        margin: 0 .2rem;
+    }
+
+    .row {
+        display: flex;
+        width: 100%;
+        flex-wrap: nowrap;
+        margin: .2rem 0;
+    }
+
+    input, select, button {
+        color: var(--textColor);
+        width: 100%;
+        height: 2rem;
+        font-size: 1.2rem;
+        background-color: var(--lightBackgroundColor);
+        border: var(--lightMainColor) solid 1px;
+        padding: .2rem .4rem;
+
+        &:focus {
+            outline: var(--contrastColor) solid 1px;
+        }
+
+        &::placeholder {
+            color: var(--darkTextColor);
+        }
+
+        option {
+            &:disabled {
+                color: var(--darkTextColor);
+            }
+        }
+    }
+
+    button {
+        background-color: var(--mainColor);
+        color: var(--highlightColor);
+        font-weight: 550;
+
+        &:hover {
+            background-color: var(--darkMainColor);
+        }
+    }
+
+    .checkbox-container {
+        background-color: var(--lightBackgroundColor);
+        border: var(--lightMainColor) solid 1px;
+        color: var(--textColor);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 .4rem;
+
+        input {
+            width: 1.5rem;
+            height: 1.5rem;
+
+            // TODO: Proper CSS for consistent look across all browser and to support safari
+        }
+
+        &:focus {
+            outline: var(--contrastColor) solid 1px;
+        }
+    }
+}
+
+span.css-0 > span {
+    background-color: var(--contrastColor);
+}
