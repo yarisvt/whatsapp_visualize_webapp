@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import ReactApexChart from 'react-apexcharts';
+import { useThemeStore } from '../../context/ThemeContext';
 
 function HBarChart(props) {
   const { title, categories, data } = props;
+  const [theme] = useThemeStore();
   const [isMobile, setMobile] = useState(window.innerWidth >= 1200);
   const series = [{ name: 'Count', data }];
 
@@ -19,9 +21,13 @@ function HBarChart(props) {
   const options = {
     chart: {
       type: 'bar',
+      background: 'none'
     },
     title: {
       text: title,
+    },
+    theme: {
+      mode: theme
     },
     plotOptions: {
       bar: {

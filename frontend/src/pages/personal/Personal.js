@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PulseLoader from 'react-spinners/PulseLoader';
-import { Button, Col, Form, InputGroup } from 'react-bootstrap';
 
 import { usePeopleStore } from '../../context/PeopleContext';
 import PageWrapper from '../../components/page/PageWrapper';
 import HeatMap from '../../components/graphs/HeatMap';
 
+import '../../styles/form.scss';
 
 function Personal() {
   const [people] = usePeopleStore();
@@ -92,29 +92,22 @@ function Personal() {
 
   return (
     <div className="content">
-      <Form onSubmit={handleClick}>
-        <Form.Row>
-          <Col>
-            <Form.Group>
-              <Form.Control
-                onChange={(e) => setWords(e.target.value)}
-                type="text"
-                placeholder="Enter words..."
-              />
-              <Form.Text className="text-muted">
-                You can search for multiple words by seperating them with a
-                comma (e.g. "word1,word2")
-              </Form.Text>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col>
-            <Form.Control
+      <form onSubmit={handleClick}>
+        <div className='row'>
+          <div className='col'>
+            <input
+              onChange={(e) => setWords(e.target.value)}
+              type="text"
+              placeholder="Enter words..."
+            />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <select
               disabled={loading}
               onChange={(e) => setPerson(e.target.value)}
               defaultValue="0"
-              as="select"
             >
               <option value="0" disabled>
                 Select a person...
@@ -124,31 +117,24 @@ function Personal() {
                   {p.name}
                 </option>
               ))}
-            </Form.Control>
-          </Col>
-          <Col>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>Monthly</InputGroup.Text>
-              </InputGroup.Prepend>
-              <InputGroup.Append>
-                <InputGroup.Checkbox
-                  onChange={(e) => setMonthly(e.target.checked)}
-                />
-              </InputGroup.Append>
-            </InputGroup>
-          </Col>
-          <Col>
-            <Button
+            </select>
+          </div>
+          <div className='col'>
+            <label className="checkbox-container"> Monthly
+              <input type="checkbox" onChange={(e) => setMonthly(e.target.checked)}/>
+              <span className='checkbox-mark'></span>
+            </label>
+          </div>
+          <div className='col'>
+            <button
               disabled={loading || !person}
               onClick={handleClick}
-              variant="primary"
             >
               Get results
-            </Button>
-          </Col>
-        </Form.Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
 
       {content}
     </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useThemeStore } from '../../context/ThemeContext';
 
 function TimeSeriesLineChart(props) {
   const { title, data } = props;
+  const [theme] = useThemeStore();
 
   const options = {
     chart: {
@@ -12,6 +14,10 @@ function TimeSeriesLineChart(props) {
         enabled: true,
         autoScaleYaxis: true,
       },
+      background: 'none'
+    },
+    theme: {
+      mode: theme
     },
     xaxis: {
       type: 'categories',

@@ -1,0 +1,39 @@
+.light {
+  $backgroundColor: #FEF7FF;
+  --backgroundColor: #{$backgroundColor};
+  --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
+  --darkBackgroundColor: #{darken($backgroundColor, 15%)};
+
+  $mainColor: #0068A8;
+  --mainColor: #{$mainColor};
+  --lightMainColor: #{lighten($mainColor, 15%)};
+  --darkMainColor: #{darken($mainColor, 15%)};
+
+  $textColor: #4B4453;
+  --textColor: #{$textColor};
+  --darkTextColor: #{lighten($textColor, 30%)};
+  --contrastTextColor: #ECECEC;
+
+  --highlightColor: #4FFBDF;
+  --contrastColor: #D65DB1;
+}
+
+.dark {
+  $backgroundColor: #121212;
+  --backgroundColor: #{$backgroundColor};
+  --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
+  --darkBackgroundColor: #{darken($backgroundColor, 15%)};
+
+  $mainColor: #2f333a;
+  --mainColor: #{$mainColor};
+  --lightMainColor: #{lighten($mainColor, 15%)};
+  --darkMainColor: #{darken($mainColor, 15%)};
+
+  $textColor: rgba(255, 255, 255, 0.60);
+  --textColor: #{$textColor};
+  --darkTextColor: #{darken($textColor, 30%)};
+  --contrastTextColor: rgba(255, 255, 255, 0.87);
+
+  --highlightColor: rgba(255, 255, 255, 0.87);
+  --contrastColor: rgba(255, 255, 255, 0.38);
+}
