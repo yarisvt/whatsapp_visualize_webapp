@@ -19,21 +19,21 @@
 }
 
 .dark {
-  $backgroundColor: #424242;
+  $backgroundColor: #121212;
   --backgroundColor: #{$backgroundColor};
   --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
   --darkBackgroundColor: #{darken($backgroundColor, 15%)};
 
-  $mainColor: #29303F;
+  $mainColor: #2f333a;
   --mainColor: #{$mainColor};
   --lightMainColor: #{lighten($mainColor, 15%)};
   --darkMainColor: #{darken($mainColor, 15%)};
 
-  $textColor: #E8DBA1;
+  $textColor: rgba(255, 255, 255, 0.60);
   --textColor: #{$textColor};
   --darkTextColor: #{darken($textColor, 30%)};
-  --contrastTextColor: #E8DBA1;
+  --contrastTextColor: rgba(255, 255, 255, 0.87);
 
-  --highlightColor: #9BB899;
-  --contrastColor: #D37F5B;
+  --highlightColor: rgba(255, 255, 255, 0.87);
+  --contrastColor: rgba(255, 255, 255, 0.38);
 }
