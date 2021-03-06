@@ -120,12 +120,10 @@ function Personal() {
             </select>
           </div>
           <div className='col'>
-            <div className="checkbox-container">
-              <label htmlFor="monthly-checkbox">Monthly</label>
-              <input id="monthly-checkbox" type="checkbox"
-                onChange={(e) => setMonthly(e.target.checked)}
-              />
-            </div>
+            <label className="checkbox-container"> Monthly
+              <input type="checkbox" onChange={(e) => setMonthly(e.target.checked)}/>
+              <span className='checkbox-mark'></span>
+            </label>
           </div>
           <div className='col'>
             <button

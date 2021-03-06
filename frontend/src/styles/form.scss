@@ -1,78 +1,134 @@
 form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .col {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    flex: 1 1 0;
+    margin: 0 .2rem;
+  }
 
-    .col {
-        display: flex;
-        flex: 1 1 0;
-        margin: 0 .2rem;
+  .row {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    margin: .2rem 0;
+  }
+
+  input, select, button {
+    width: 100%;
+    padding: .2rem .4rem;
+    border: var(--lightMainColor) solid 1px;
+    background-color: var(--lightBackgroundColor);
+    color: var(--textColor);
+    font-size: 1rem !important;
+    font-size: 1.2rem;
+
+    &:focus {
+      outline: var(--contrastColor) solid 1px;
     }
 
-    .row {
-        display: flex;
-        width: 100%;
-        flex-wrap: nowrap;
-        margin: .2rem 0;
+    &::placeholder {
+      color: var(--darkTextColor);
     }
 
-    input, select, button {
-        color: var(--textColor);
-        width: 100%;
-        height: 2rem;
-        font-size: 1.2rem;
-        background-color: var(--lightBackgroundColor);
-        border: var(--lightMainColor) solid 1px;
-        padding: .2rem .4rem;
+    option {
+      &:disabled {
+        color: var(--darkTextColor);
+      }
+    }
+  }
 
-        &:focus {
-            outline: var(--contrastColor) solid 1px;
-        }
+  button {
+    background-color: var(--mainColor);
+    color: var(--contrastTextColor);
+    font-weight: 600;
 
-        &::placeholder {
-            color: var(--darkTextColor);
-        }
-
-        option {
-            &:disabled {
-                color: var(--darkTextColor);
-            }
-        }
+    &:hover {
+      background-color: var(--darkMainColor);
     }
 
-    button {
-        background-color: var(--mainColor);
-        color: var(--highlightColor);
-        font-weight: 550;
+    &:disabled {
+      background-color: var(--lightMainColor);
+      cursor: not-allowed;
+      font-weight: 500;
+    }
+  }
 
-        &:hover {
-            background-color: var(--darkMainColor);
+  .checkbox-container {
+
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .4rem;
+    border: var(--lightMainColor) solid 1px;
+    background-color: var(--lightBackgroundColor);
+    color: var(--textColor);
+   
+    cursor: pointer;
+    font-size: 1rem !important;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    input {
+      position: absolute;
+      width: 0;
+      height: 0;
+      cursor: pointer;
+      opacity: 0;
+
+      &:checked ~ .checkbox-mark {
+        background-color: var(--contrastColor);
+
+        &::after {
+          display: block;
         }
+      }
+
+      &:focus {
+        background-color: red;
+        // border: var(--contrastColor) solid 1px;
+      }
     }
 
-    .checkbox-container {
-        background-color: var(--lightBackgroundColor);
-        border: var(--lightMainColor) solid 1px;
-        color: var(--textColor);
-        display: flex;
-        align-items: center;
-        width: 100%;
-        justify-content: space-between;
-        padding: 0 .4rem;
+    .checkbox-mark {
+      display: flex;
+      width: 1.3rem;
+      height: 1.3rem;
+      align-items: center;
+      justify-content: center;
 
-        input {
-            width: 1.5rem;
-            height: 1.5rem;
+      border: var(--lightMainColor) solid 1px;
+      background-color: #EEE;
 
-            // TODO: Proper CSS for consistent look across all browser and to support safari
-        }
+      &::after {
+        display: none;
+        width: .3rem;
+        height: .7rem;
+        border: solid white;
+        border-width: 0 3px 3px 0;
 
-        &:focus {
-            outline: var(--contrastColor) solid 1px;
-        }
+        margin-top: -.2rem;
+        content: "";
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
     }
+
+    &:hover {
+      .checkbox-mark {
+        background-color: #CCC;
+      }
+    }
+  }
 }
 
 span.css-0 > span {
-    background-color: var(--contrastColor);
+  background-color: var(--contrastColor);
 }

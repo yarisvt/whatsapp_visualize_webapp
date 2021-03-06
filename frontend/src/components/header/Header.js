@@ -41,7 +41,7 @@ function Header() {
     <header>
       <nav>
         <Link to='/group'>
-          <div className={`header-item ${location.pathname === '/group' ? 'active' : ''}`}>
+          <div className={`header-item ${location.pathname === '/group' || location.pathname === '/' ? 'active' : ''}`}>
             <span>Group</span>
           </div>
         </Link>
