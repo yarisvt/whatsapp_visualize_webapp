@@ -1,0 +1,17 @@
+.light { 
+  .copy-icon {
+    fill: #6E8192;
+  }
+}
+
+.dark { 
+  .copy-icon {
+    fill: #F3F4F5;
+  }
+}
+ 
+@media only screen and (max-width: 992px) {
+  .copy-icon {
+    display: none;
+  }
+}
