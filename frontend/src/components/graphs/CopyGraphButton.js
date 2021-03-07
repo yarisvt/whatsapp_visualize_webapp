@@ -4,7 +4,7 @@ import '../../styles/copy-graph.scss';
 
 import ApexCharts from 'apexcharts';
 
-function CopyGraphButton({ chartId }) {
+function CopyGraphButton({ chartId, animationEnded }) {
   const [showPopup, setShowPopup] = useState(false);
   const [copyText, setCopyText] = useState('');
   
@@ -50,7 +50,7 @@ function CopyGraphButton({ chartId }) {
   };
   
   return (
-    <button className='popup' onClick={copyGraph}>
+    <button disabled={!animationEnded} className='popup' onClick={copyGraph}>
       Copy chart
       <span className={`popuptext ${showPopup ? 'show' : ''}`}>{copyText}</span>
     </button>

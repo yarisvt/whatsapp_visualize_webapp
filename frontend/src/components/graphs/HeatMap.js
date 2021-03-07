@@ -7,7 +7,7 @@ import CopyGraphButton from './CopyGraphButton';
 function HeatMap(props) {
   const { title, categories, data } = props;
   const [theme] = useThemeStore();
-  const [animationEnd, setAnimationEnd] = useState(false);
+  const [animationEnded, setAnimationEnded] = useState(false);
 
   const options = {
     chart: {
@@ -15,7 +15,7 @@ function HeatMap(props) {
       background: theme === 'dark' ? '#121212' : '#FEF7FF',
       id: 'heatmap',
       events: {
-        animationEnd: () => setAnimationEnd(true),
+        animationEnd: () => setAnimationEnded(true),
       }
     },
     theme: {
@@ -49,7 +49,7 @@ function HeatMap(props) {
           width="100%"
         />
       </div>
-      { animationEnd && <CopyGraphButton chartId='heatmap' />}
+      <CopyGraphButton key={animationEnded} chartId='heatmap' animationEnded={animationEnded}/>
     </>
   );
 }

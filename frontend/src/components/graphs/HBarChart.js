@@ -9,7 +9,7 @@ function HBarChart(props) {
   const [theme] = useThemeStore();
   const [isMobile, setMobile] = useState(window.innerWidth >= 1200);
   const series = [{ name: 'Count', data }];
-  const [animationEnd, setAnimationEnd] = useState(false);
+  const [animationEnded, setAnimationEnded] = useState(false);
   
 
   const updateMedia = () => {
@@ -27,7 +27,7 @@ function HBarChart(props) {
       background: theme === 'dark' ? '#121212' : '#FEF7FF',
       id: 'bar-chart',
       events: {
-        animationEnd: () => setAnimationEnd(true),
+        animationEnd: () => setAnimationEnded(true),
       }
     },
     title: {
@@ -73,7 +73,7 @@ function HBarChart(props) {
           width="100%"
         />
       </div>
-      { animationEnd && <CopyGraphButton chartId='bar-chart' />}
+      <CopyGraphButton key={animationEnded} chartId='bar-chart' animationEnded={animationEnded}/>
     </>
   );
 }

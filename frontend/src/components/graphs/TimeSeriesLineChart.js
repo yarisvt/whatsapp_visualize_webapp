@@ -6,7 +6,7 @@ import CopyGraphButton from './CopyGraphButton';
 function TimeSeriesLineChart(props) {
   const { title, data } = props;
   const [theme] = useThemeStore();
-  const [animationEnd, setAnimationEnd] = useState(false);
+  const [animationEnded, setAnimationEnded] = useState(false);
 
   const options = {
     chart: {
@@ -19,7 +19,7 @@ function TimeSeriesLineChart(props) {
       },
       background: theme === 'dark' ? '#121212' : '#FEF7FF',
       events: {
-        animationEnd: () => setAnimationEnd(true),
+        animationEnd: () => setAnimationEnded(true),
       }
     },
     theme: {
@@ -52,7 +52,7 @@ function TimeSeriesLineChart(props) {
           width="100%"
         />
       </div>
-      { animationEnd && <CopyGraphButton chartId='line-chart' />}
+      <CopyGraphButton key={animationEnded} chartId='line-chart' animationEnded={animationEnded}/>
     </>
   );
 }
