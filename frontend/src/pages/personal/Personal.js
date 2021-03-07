@@ -20,10 +20,10 @@ function Personal() {
   
   useEffect(() => {
     if (people.length > 0) {
-      setName(people.find(p => p.id === parseInt(person)).name);
+      const chosenName = people[person - 1].name;
+      setName(chosenName.slice(-1) === 's' ? `${chosenName}'` : `${chosenName}'s`);
     }
   }, [result]);
-  
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ function Personal() {
   } else if (result && typeof result === 'object') {
     content = (
       <HeatMap
-        title={lastWords ? `${name}: ${lastWords}` : `${name}`}
+        title={lastWords ? `${name} word count of: ${lastWords}` : `${name} message count`}
         categories={[
           'January',
           'February',
