@@ -19,11 +19,11 @@ function Personal() {
   const [name, setName] = useState('');
   
   useEffect(() => {
-    if (people.length > 0) {
+    if (people.length && person) {
       const chosenName = people[person - 1].name;
-      setName(chosenName.slice(-1) === 's' ? `${chosenName}'` : `${chosenName}'s`);
+      setName(chosenName.endsWith('s') ? `${chosenName}'` : `${chosenName}'s`);
     }
-  }, [result]);
+  });
 
   const handleClick = (e) => {
     e.preventDefault();
