@@ -16,6 +16,8 @@
 
   --highlightColor: #4FFBDF;
   --contrastColor: #D65DB1;
+
+  --successColor: #00FF40;
 }
 
 .dark {
@@ -24,7 +26,7 @@
   --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
   --darkBackgroundColor: #{darken($backgroundColor, 15%)};
 
-  $mainColor: #2f333a;
+  $mainColor: #2F333A;
   --mainColor: #{$mainColor};
   --lightMainColor: #{lighten($mainColor, 15%)};
   --darkMainColor: #{darken($mainColor, 15%)};
@@ -36,4 +38,6 @@
 
   --highlightColor: rgba(255, 255, 255, 0.87);
   --contrastColor: rgba(255, 255, 255, 0.38);
+
+  --successColor: #00FF40;
 }

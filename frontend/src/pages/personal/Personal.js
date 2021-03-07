@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PulseLoader from 'react-spinners/PulseLoader';
 
 import { usePeopleStore } from '../../context/PeopleContext';
@@ -16,6 +16,14 @@ function Personal() {
   const [monthly, setMonthly] = useState(false);
   const [words, setWords] = useState('');
   const [lastWords, setLastWords] = useState('');
+  const [name, setName] = useState('');
+  
+  useEffect(() => {
+    if (people.length && person) {
+      const chosenName = people[person - 1].name;
+      setName(chosenName.endsWith('s') ? `${chosenName}'` : `${chosenName}'s`);
+    }
+  });
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -63,7 +71,7 @@ function Personal() {
   } else if (result && typeof result === 'object') {
     content = (
       <HeatMap
-        title={lastWords ? `Words: ${lastWords}` : 'Messages'}
+        title={lastWords ? `${name} word count of: ${lastWords}` : `${name} message count`}
         categories={[
           'January',
           'February',
@@ -106,7 +114,10 @@ function Personal() {
           <div className='col'>
             <select
               disabled={loading}
-              onChange={(e) => setPerson(e.target.value)}
+              onChange={(e) => {
+                setPerson(e.target.value);
+
+              }}
               defaultValue="0"
             >
               <option value="0" disabled>
@@ -135,7 +146,6 @@ function Personal() {
           </div>
         </div>
       </form>
-
       {content}
     </div>
   );

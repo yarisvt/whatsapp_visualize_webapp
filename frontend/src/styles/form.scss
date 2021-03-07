@@ -2,6 +2,7 @@ form {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin: .5rem 0;
 
   .col {
     display: flex;
@@ -93,7 +94,6 @@ form {
 
       &:focus {
         background-color: red;
-        // border: var(--contrastColor) solid 1px;
       }
     }
 

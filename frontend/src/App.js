@@ -6,18 +6,22 @@ import Header from './components/header/Header';
 import Personal from './pages/personal/Personal';
 import Group from './pages/group/Group';
 import { ThemeProvider } from './context/ThemeContext';
+import { IsMobileProvider } from './context/IsMobileContext';
+
 
 function App() {
   return (
     <BrowserRouter>
       <PeopleProvider>
         <ThemeProvider>
-          <Header/>
-          <Switch>
-            <Route exact path='/' component={Group}/>
-            <Route exact path='/group' component={Group}/>
-            <Route exact path='/personal' component={Personal}/>
-          </Switch>
+          <IsMobileProvider>
+            <Header/>
+            <Switch>
+              <Route exact path='/' component={Group}/>
+              <Route exact path='/group' component={Group}/>
+              <Route exact path='/personal' component={Personal}/>
+            </Switch>
+          </IsMobileProvider>
         </ThemeProvider>
       </PeopleProvider>
     </BrowserRouter>
