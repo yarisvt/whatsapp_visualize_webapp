@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import ReactApexChart from 'react-apexcharts';
 import { useThemeStore } from '../../context/ThemeContext';
+import { useIsMobileStore } from '../../context/IsMobileContext';
+
 import CopyGraphButton from '../buttons/CopyGraphButton';
 
 function HBarChart(props) {
   const { title, categories, data } = props;
   const [theme] = useThemeStore();
-  const [isMobile, setMobile] = useState(window.innerWidth < 992);
+  const [isMobile] = useIsMobileStore();
   const series = [{ name: 'Count', data }];
   const [animationEnded, setAnimationEnded] = useState(false);
   
-
-  const updateMedia = () => {
-    setMobile(window.innerWidth < 992);
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', updateMedia);
-    return () => window.removeEventListener('resize', updateMedia);
-  });
-
   const options = {
     chart: {
       type: 'bar',
