@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../../styles/copy-graph.scss';
+import '../../styles/copy-chart-button.scss';
 
 import ApexCharts from 'apexcharts';
 

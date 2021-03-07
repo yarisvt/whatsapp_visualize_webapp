@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PulseLoader from 'react-spinners/PulseLoader';
 
 import { usePeopleStore } from '../../context/PeopleContext';
@@ -16,6 +16,13 @@ function Personal() {
   const [monthly, setMonthly] = useState(false);
   const [words, setWords] = useState('');
   const [lastWords, setLastWords] = useState('');
+  const [name, setName] = useState('');
+  
+  useEffect(() => {
+    if (people.length > 0) {
+      setName(people.find(p => p.id === parseInt(person)).name);
+    }
+  }, [result]);
   
 
   const handleClick = (e) => {
@@ -62,10 +69,9 @@ function Personal() {
       </div>
     );
   } else if (result && typeof result === 'object') {
-    const name = people.find(p => p.id === parseInt(person)).name;
     content = (
       <HeatMap
-        title={lastWords ? `All messages for ${name} with words: ${lastWords}` : `All messages for ${name}`}
+        title={lastWords ? `${name}: ${lastWords}` : `${name}`}
         categories={[
           'January',
           'February',
@@ -140,7 +146,6 @@ function Personal() {
           </div>
         </div>
       </form>
-
       {content}
     </div>
   );

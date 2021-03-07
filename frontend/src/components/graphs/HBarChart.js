@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 import ReactApexChart from 'react-apexcharts';
 import { useThemeStore } from '../../context/ThemeContext';
-import CopyGraphButton from './CopyGraphButton';
+import CopyGraphButton from '../buttons/CopyGraphButton';
 
 function HBarChart(props) {
   const { title, categories, data } = props;
   const [theme] = useThemeStore();
-  const [isMobile, setMobile] = useState(window.innerWidth >= 1200);
+  const [isMobile, setMobile] = useState(window.innerWidth < 992);
   const series = [{ name: 'Count', data }];
   const [animationEnded, setAnimationEnded] = useState(false);
   
 
   const updateMedia = () => {
-    setMobile(window.innerWidth >= 1200);
+    setMobile(window.innerWidth < 992);
   };
 
   useEffect(() => {
@@ -49,11 +49,11 @@ function HBarChart(props) {
       categories,
     },
     legend: {
-      show: !isMobile,
+      show: isMobile,
     },
     yaxis: {
       labels: {
-        show: isMobile,
+        show: !isMobile,
         style: {
           fontSize: '1rem',
         },
@@ -73,7 +73,7 @@ function HBarChart(props) {
           width="100%"
         />
       </div>
-      <CopyGraphButton key={animationEnded} chartId='bar-chart' animationEnded={animationEnded}/>
+      {!isMobile && <CopyGraphButton key={animationEnded} chartId='bar-chart' animationEnded={animationEnded}/>}
     </>
   );
 }
