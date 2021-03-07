@@ -4,7 +4,7 @@ const copyGraph = async (chartId) => {
   ApexCharts.exec(chartId, 'dataURI').then(({ imgURI }) => {
     const canvas = document.createElement('canvas');
     canvas.width = 1100;
-    canvas.height = 500;
+    canvas.height = 400;
 
     const ctx  = canvas.getContext('2d');
     ctx.fillRect(0, 0, canvas.width, canvas.height);
