@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 import { useThemeStore } from '../../context/ThemeContext';
@@ -9,9 +9,13 @@ import '../../styles/graph.scss';
 function TimeSeriesLineChart(props) {
   const { title, data } = props;
   const [theme] = useThemeStore();
+  const [success, setSuccess] = useState(false);
 
+  let resultAnimationTimeout = null;
   let animationEnded = false;
   let copyQueued = false;
+
+  useEffect(() => () => clearTimeout(resultAnimationTimeout), [resultAnimationTimeout]);
 
   const options = {
     chart: {
@@ -28,7 +32,10 @@ function TimeSeriesLineChart(props) {
           animationEnded = true;
           if (copyQueued) {
             copyQueued = false;
-            copyGraph('line-chart');
+            copyGraph('line-chart', () => {
+              setSuccess(true);
+              resultAnimationTimeout = setTimeout(() => setSuccess(false), 2000);
+            });
           }
         }
       },
@@ -43,7 +50,12 @@ function TimeSeriesLineChart(props) {
               if (!animationEnded) {
                 copyQueued = true;
               } else {
-                copyGraph('line-chart');
+                copyGraph('line-chart', () => {
+                  setSuccess(true);
+                  resultAnimationTimeout = setTimeout(() => {
+                    setSuccess(false);
+                  }, 2000);
+                });
               }
             }
           }]
@@ -70,7 +82,7 @@ function TimeSeriesLineChart(props) {
   };
 
   return (
-    <div id="chart" >
+    <div id="chart" className={success ? 'success' : ''}>
       <ReactApexChart
         options={options}
         series={data.series}

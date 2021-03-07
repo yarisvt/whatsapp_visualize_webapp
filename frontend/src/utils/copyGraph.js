@@ -1,6 +1,6 @@
 import ApexCharts from 'apexcharts';
 
-const copyGraph = async (chartId) => {
+const copyGraph = async (chartId, cb) => {
   ApexCharts.exec(chartId, 'dataURI').then(({ imgURI }) => {
     const canvas = document.createElement('canvas');
     canvas.width = 1100;
@@ -20,9 +20,10 @@ const copyGraph = async (chartId) => {
           new ClipboardItem({
             [blob.type]: blob
           })
-        ]).catch(() => {
-          alert('Something went wrong while copying the graph');
-        });
+        ]).then(cb)
+          .catch(() => {
+            alert('Something went wrong while copying the graph');
+          });
       });
     };
   });

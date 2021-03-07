@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 import { useThemeStore } from '../../context/ThemeContext';
@@ -11,9 +11,14 @@ function HBarChart(props) {
   const { title, categories, data } = props;
   const [theme] = useThemeStore();
   const [isMobile] = useIsMobileStore();
+  const [success, setSuccess] = useState(false);
   const series = [{ name: 'Count', data }];
+
+  let resultAnimationTimeout = null;
   let animationEnded = false;
   let copyQueued = false;
+
+  useEffect(() => () => clearTimeout(resultAnimationTimeout), [resultAnimationTimeout]);
   
   const options = {
     chart: {
@@ -25,7 +30,10 @@ function HBarChart(props) {
           animationEnded = true;
           if (copyQueued) {
             copyQueued = false;
-            copyGraph('bar-chart');
+            copyGraph('line-chart', () => {
+              setSuccess(true);
+              resultAnimationTimeout = setTimeout(() => setSuccess(false), 2000);
+            });
           }
         }
       },
@@ -40,7 +48,12 @@ function HBarChart(props) {
               if (!animationEnded) {
                 copyQueued = true;
               } else {
-                copyGraph('bar-chart');
+                copyGraph('line-chart', () => {
+                  setSuccess(true);
+                  resultAnimationTimeout = setTimeout(() => {
+                    setSuccess(false);
+                  }, 2000);
+                });
               }
             }
           }]
@@ -80,7 +93,7 @@ function HBarChart(props) {
   };
 
   return (
-    <div id="chart">
+    <div id="chart" className={success ? 'success' : ''}>
       <ReactApexChart
         options={options}
         series={series}

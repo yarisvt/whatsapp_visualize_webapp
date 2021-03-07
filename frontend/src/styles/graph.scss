@@ -9,9 +9,29 @@
     fill: #F3F4F5;
   }
 }
+
+#chart.success {
+  width: 100%;
+  animation: successGlow 1s ease-in-out 0s infinite;
+}
+
  
 @media only screen and (max-width: 992px) {
   .copy-icon {
     display: none;
+  }
+}
+
+@keyframes successGlow {
+  0% {
+    box-shadow: 0 0 0 0 var(--successColor);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 0 var(--successColor);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 var(--successColor);
   }
 }
