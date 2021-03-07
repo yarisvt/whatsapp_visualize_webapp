@@ -45,7 +45,7 @@ function HeatMap(props) {
               if (!animationEnded) {
                 copyQueued = true;
               } else {
-                copyGraph('line-chart', () => {
+                copyGraph('heatmap', () => {
                   setSuccess(true);
                   resultAnimationTimeout = setTimeout(() => {
                     setSuccess(false);

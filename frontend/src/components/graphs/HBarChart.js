@@ -48,7 +48,7 @@ function HBarChart(props) {
               if (!animationEnded) {
                 copyQueued = true;
               } else {
-                copyGraph('line-chart', () => {
+                copyGraph('bar-chart', () => {
                   setSuccess(true);
                   resultAnimationTimeout = setTimeout(() => {
                     setSuccess(false);
