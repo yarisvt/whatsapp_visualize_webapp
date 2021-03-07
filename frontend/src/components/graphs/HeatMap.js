@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useThemeStore } from '../../context/ThemeContext';
+
+import CopyGraphButton from './CopyGraphButton';
 
 function HeatMap(props) {
   const { title, categories, data } = props;
   const [theme] = useThemeStore();
+  const [animationEnd, setAnimationEnd] = useState(false);
 
   const options = {
     chart: {
       type: 'heatmap',
-      background: 'none'
+      background: theme === 'dark' ? '#121212' : '#FEF7FF',
+      id: 'heatmap',
+      events: {
+        animationEnd: () => setAnimationEnd(true),
+      }
     },
     theme: {
       mode: theme
@@ -32,15 +39,18 @@ function HeatMap(props) {
   };
 
   return (
-    <div id="chart" className="mt-3">
-      <ReactApexChart
-        options={options}
-        series={data}
-        type="heatmap"
-        height={400}
-        width="100%"
-      />
-    </div>
+    <>
+      <div id="chart" className="mt-3">
+        <ReactApexChart
+          options={options}
+          series={data}
+          type="heatmap"
+          height={400}
+          width="100%"
+        />
+      </div>
+      { animationEnd && <CopyGraphButton chartId='heatmap' />}
+    </>
   );
 }
 

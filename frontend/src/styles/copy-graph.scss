@@ -1,0 +1,78 @@
+button {
+  width: 10%;
+  padding: .2rem .4rem;
+  border: var(--lightMainColor) solid 1px;
+  background-color: var(--mainColor);
+  border-radius: 3px;
+  color: var(--contrastTextColor);
+  font-size: 1rem !important;
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  &:focus {
+    outline: var(--contrastColor) solid 1px;
+  }
+
+  &::placeholder {
+    color: var(--darkTextColor);
+  }
+
+  &:hover {
+    background-color: var(--darkMainColor);
+  }
+
+  &:disabled {
+    background-color: var(--lightMainColor);
+    cursor: not-allowed;
+    font-weight: 500;
+  }
+}
+
+.popup {
+  position: relative;
+  display: inline-block;
+}
+
+.popup .popuptext {
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  width: 160px;
+  padding: 8px 0;
+  margin-left: -80px;
+  background-color: #555;
+  border-radius: 3px;
+  color: #FFF;
+  text-align: center;
+  visibility: hidden;
+}
+
+.popup .popuptext::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  margin-left: -5px;
+  content: "";
+}
+
+.popup .show {
+  -webkit-animation: fadeIn .5s;
+  animation: fadeIn .5s;
+  visibility: visible
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+
+  to {opacity: 1 ;}
+}

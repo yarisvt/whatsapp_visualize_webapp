@@ -16,6 +16,7 @@ function Personal() {
   const [monthly, setMonthly] = useState(false);
   const [words, setWords] = useState('');
   const [lastWords, setLastWords] = useState('');
+  
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -61,9 +62,10 @@ function Personal() {
       </div>
     );
   } else if (result && typeof result === 'object') {
+    const name = people.find(p => p.id === parseInt(person)).name;
     content = (
       <HeatMap
-        title={lastWords ? `Words: ${lastWords}` : 'Messages'}
+        title={lastWords ? `All messages for ${name} with words: ${lastWords}` : `All messages for ${name}`}
         categories={[
           'January',
           'February',
@@ -106,7 +108,10 @@ function Personal() {
           <div className='col'>
             <select
               disabled={loading}
-              onChange={(e) => setPerson(e.target.value)}
+              onChange={(e) => {
+                setPerson(e.target.value);
+
+              }}
               defaultValue="0"
             >
               <option value="0" disabled>

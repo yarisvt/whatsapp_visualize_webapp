@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useThemeStore } from '../../context/ThemeContext';
+import CopyGraphButton from './CopyGraphButton';
 
 function TimeSeriesLineChart(props) {
   const { title, data } = props;
   const [theme] = useThemeStore();
+  const [animationEnd, setAnimationEnd] = useState(false);
 
   const options = {
     chart: {
+      id: 'line-chart',
       type: 'line',
       zoom: {
         type: 'x',
         enabled: true,
         autoScaleYaxis: true,
       },
-      background: 'none'
+      background: theme === 'dark' ? '#121212' : '#FEF7FF',
+      events: {
+        animationEnd: () => setAnimationEnd(true),
+      }
     },
     theme: {
       mode: theme
@@ -32,19 +38,22 @@ function TimeSeriesLineChart(props) {
     colors: ['#f00', '#ffd700', '#c71585', '#0f0', '#117519', '#00f', '#0ff'],
     stroke: {
       curve: 'straight',
-    },
+    }
   };
 
   return (
-    <div id="chart">
-      <ReactApexChart
-        options={options}
-        series={data.series}
-        type="line"
-        height={400}
-        width="100%"
-      />
-    </div>
+    <>
+      <div id="chart" >
+        <ReactApexChart
+          options={options}
+          series={data.series}
+          type="line"
+          height={400}
+          width="100%"
+        />
+      </div>
+      { animationEnd && <CopyGraphButton chartId='line-chart' />}
+    </>
   );
 }
 
