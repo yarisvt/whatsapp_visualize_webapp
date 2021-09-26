@@ -5,8 +5,8 @@ const { Person } = require('../models/Person');
 const { Word } = require('../models/Word');
 
 const MESSAGE_PATTERN = /^\u200e?\[(?<time>\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2})\] (?<sender>.*?): (?<message>.*)$/;
-const REPLACE_PATTERN = /[!,."'`?()]+/g;
-const SPLIT_PATTERN = /[\s/\\;:]+/g;
+const WORD_PATTERN = /[0-9\p{L}\p{M}-]+/gu;
+const EMOJI_PATTERN = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
 const URL_PATTERN = /(^|\s)https?:\/\/.*?($|\s)/g;
 
 const people = new Map();
@@ -27,7 +27,7 @@ async function populateDatabase(path) {
     }
 
     try {
-      let words;
+      let words = [];
       if (m = l.match(MESSAGE_PATTERN)) {
         // Check if sender was cached
         person = people.get(m.groups.sender);
@@ -42,27 +42,60 @@ async function populateDatabase(path) {
           people.set(m.groups.sender, person);
         }
         message = await person.createMessage({ time: moment(m.groups.time, 'DD-MM-YYYY hh:mm:ss') });
+        
         // Replace media for queries
         if (l.indexOf('\u200e') !== -1) {
           if (l.indexOf('afbeelding weggelaten') !== -1) {
-            words = ['!img'];
+            words.push('!img');
           } else if (l.indexOf('GIF weggelaten') !== -1) {
-            words = ['!gif'];
+            words.push('!gif');
           } else if (l.indexOf('video weggelaten') !== -1) {
-            words = ['!vid'];
+            words.push('!vid');
           } else if (l.indexOf('document weggelaten') !== -1) {
-            words = ['!doc'];
+            words.push('!doc');
           } else if (l.indexOf('sticker weggelaten') !== -1) {
-            words = ['!stk'];
+            words.push('!stk');
           }
         } else {
-          words = m.groups.message.toLowerCase().replace(REPLACE_PATTERN, '').replace(URL_PATTERN, ' !url ').split(SPLIT_PATTERN);
+          let msg = m.groups.message.toLowerCase();
+          // Report each URL
+          const urls = msg.match(URL_PATTERN);
+          if (urls) {
+            for (let i = 0; i < urls.length; i++) {
+              words.push('!url');
+            }
+            msg = msg.replace(URL_PATTERN, '');
+          }
+
+          // Get words and emojis
+          words = words.concat(msg.match(WORD_PATTERN));
+          words = words.concat(msg.match(EMOJI_PATTERN));
         }
       } else {
-        words = l.toLowerCase().replace(REPLACE_PATTERN, '').replace(URL_PATTERN, ' !url ').split(SPLIT_PATTERN);
-      }
+        // e.g. group foto changed
+        if (l.indexOf('\u200e') !== -1) {
+          continue;
+        }
 
+        let msg = l.toLowerCase();
+        // Report each URL
+        const urls = msg.match(URL_PATTERN);
+        if (Boolean(urls)) {
+          for (let i = 0; i < urls.length; i++) {
+            words.push('!url');
+          }
+          msg = msg.replace(URL_PATTERN, '');
+        }
+
+        // Get words and emojis
+        words = words.concat(msg.match(WORD_PATTERN));
+        words = words.concat(msg.match(EMOJI_PATTERN));
+      }
+      
       for (const word in words) {
+        if (!Boolean(words[word])) {
+          continue;
+        }
         const wo = words[word].trim();
         // i.e. empty string
         if (!Boolean(wo)) {
