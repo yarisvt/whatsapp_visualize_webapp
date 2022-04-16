@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { PeopleProvider } from './context/PeopleContext';
 import Header from './components/header/Header';
 
@@ -16,11 +16,11 @@ function App() {
         <ThemeProvider>
           <IsMobileProvider>
             <Header/>
-            <Switch>
-              <Route exact path='/' component={Group}/>
-              <Route exact path='/group' component={Group}/>
-              <Route exact path='/personal' component={Personal}/>
-            </Switch>
+            <Routes>
+              <Route exact path='/' element={Group}/>
+              <Route exact path='/group' element={Group}/>
+              <Route exact path='/personal' element={Personal}/>
+            </Routes>
           </IsMobileProvider>
         </ThemeProvider>
       </PeopleProvider>
