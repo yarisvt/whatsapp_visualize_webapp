@@ -8,7 +8,6 @@ import Group from './pages/group/Group';
 import { ThemeProvider } from './context/ThemeContext';
 import { IsMobileProvider } from './context/IsMobileContext';
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -17,9 +16,14 @@ function App() {
           <IsMobileProvider>
             <Header/>
             <Routes>
-              <Route exact path='/' element={Group}/>
-              <Route exact path='/group' element={Group}/>
-              <Route exact path='/personal' element={Personal}/>
+              <Route exact path='/' element={<Group/>}/>
+              <Route path='/group' element={<Group/>}/>
+              <Route path='/personal' element={<Personal/>}/>
+              <Route path='*' element={
+                <div style={{ padding: '1rem' }}>
+                  <p>There's nothing here!</p>
+                </div>
+              }/>
             </Routes>
           </IsMobileProvider>
         </ThemeProvider>
