@@ -1,4 +1,4 @@
-FROM node:14.16.0-alpine
+FROM node:16.14.2-alpine
 
 WORKDIR '/app'
 
@@ -7,7 +7,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package*.json ./
 
 RUN npm install npm serve -g --silent
-RUN npm ci --only=production --silent
+RUN npm ci --omit=dev --silent
 
 COPY . .
 

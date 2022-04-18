@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PulseLoader from 'react-spinners/PulseLoader';
+//import PulseLoader from 'react-spinners/PulseLoader';
 
 import { usePeopleStore } from '../../context/PeopleContext';
 import PageWrapper from '../../components/page/PageWrapper';
@@ -48,7 +48,7 @@ function Personal() {
   let content;
 
   if (loading) {
-    content = <PulseLoader color="gray" size="1rem" />;
+    content = <p>Loading...</p>;
   } else if (error) {
     content = (
       <div className="message-box error">
