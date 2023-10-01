@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "apexcharts": "^3.35.0",
-    "node-sass": "^6.0.1",
-    "react": "^18.0.0",
-    "react-apexcharts": "^1.4.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.3.0",
+    "apexcharts": "^3.43.0",
+    "node-sass": "^8.0.0",
+    "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1"
   },
   "scripts": {
@@ -36,10 +36,10 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^8.13.0",
-    "stylelint": "^14.7.0",
-    "stylelint-config-idiomatic-order": "^8.1.0",
-    "stylelint-order": "^5.0.0",
-    "stylelint-scss": "^4.2.0"
+    "eslint": "^8.50.0",
+    "stylelint": "^15.10.3",
+    "stylelint-config-idiomatic-order": "9.0.0",
+    "stylelint-order": "^6.0.3",
+    "stylelint-scss": "^5.2.1"
   }
 }
